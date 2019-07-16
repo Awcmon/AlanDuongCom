@@ -52,6 +52,8 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Data\basic.html" />
+    <Content Include="Data\index.html" />
+    <Content Include="Data\nav.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
