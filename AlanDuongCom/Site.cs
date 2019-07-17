@@ -8,13 +8,11 @@ namespace AlanDuongCom
 {
 	class Site
 	{
-		private List<Page> pages = new List<Page>();
-		private List<NavItem> navItems = new List<NavItem>();
+		private List<Page> pages;
+		private List<NavItem> navItems;
 
-		private string sitename = "Alan Duong";
-		private string templatePath = "basic.html";
-
-		private DataElement nav = new DataElement("nav.html");
+		private string sitename;
+		private string templatePath;
 
 		//navCatetory, "" to show on the navBar without a category, null to not show at all
 		public void AddPage(string title, string contentPath, string navCategory)
@@ -27,9 +25,12 @@ namespace AlanDuongCom
 			}
 		}
 
-		public Site()
+		public Site(string sitename, string templatePath)
 		{
-
+			this.sitename = sitename;
+			this.templatePath = templatePath;
+			navItems = new List<NavItem>();
+			pages = new List<Page>();
 		}
 
 		public void Generate()

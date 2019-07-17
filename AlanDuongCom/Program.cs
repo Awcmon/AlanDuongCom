@@ -38,7 +38,7 @@ namespace AlanDuongCom
 			System.IO.File.WriteAllText(@"Out\index.html", page.Bake());
 			*/
 
-			Site site = new Site();
+			Site site = new Site("Alan Duong", "basic.html");
 			site.AddPage("Index", "index.html", "");
 			site.AddPage("Projects", "index.html", "");
 			site.AddPage("Tools", "index.html", "");

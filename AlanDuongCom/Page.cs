@@ -46,22 +46,5 @@ namespace AlanDuongCom
 			}
 			SetProperty("$NAV$", output.Bake());
 		}
-
-		/*
-		public void Bake()
-		{
-			output = output.Replace("$TITLE$", sitename + title);
-			output = output.Replace("$NAV$", nav.Bake());
-			output = output.Replace("$CONTENT$", content);
-		}
-		*/
-
-		/*
-		private void OutputFile()
-		{
-			System.IO.Directory.CreateDirectory("Out");
-			System.IO.File.WriteAllText(@"Out\" + title.ToLower() + ".html", output);
-		}
-		*/
 	}
 }
