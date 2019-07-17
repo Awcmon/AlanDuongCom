@@ -41,8 +41,9 @@ namespace AlanDuongCom
 			Site site = new Site("Alan Duong", "basic.html");
 			site.AddPage("Index", "index.html", "");
 			site.AddPage("SUPERCRUISE", "supercruise.html", "Projects");
-			site.AddPage("DominoComputer1", "wip.html", "Projects");
-			site.AddPage("MILCalculator", "wip.html", "Tools");
+			site.AddPage("TwoToner", "wip.html", "Projects");
+			site.AddPage("DominoComputer", "wip.html", "Projects");
+			site.AddPage("MIL/MOA Calculator", "wip.html", "Tools");
 			site.AddPage("About", "wip.html", "");
 			site.AddPage("Blog", "wip.html", "");
 			site.Generate();

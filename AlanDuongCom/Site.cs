@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AlanDuongCom
@@ -14,6 +15,12 @@ namespace AlanDuongCom
 		private string sitename;
 		private string templatePath;
 
+		public string SanitizeURL(string url)
+		{
+			Regex rgx = new Regex("[^a-zA-Z0-9-]");
+			return rgx.Replace(url.ToLower(), "-");
+		}
+
 		//navCatetory, "" to show on the navBar without a category, null to not show at all
 		public void AddPage(string title, string contentPath, string navCategory)
 		{
@@ -23,7 +30,7 @@ namespace AlanDuongCom
 			if(navCategory == null) { return; }
 			if (navCategory == "")
 			{
-				navItems.Add(new NavItem(title, title + ".html"));
+				navItems.Add(new NavItem(title, SanitizeURL(title) + ".html"));
 			}
 			else
 			{
@@ -41,7 +48,7 @@ namespace AlanDuongCom
 					category = new NavItem(navCategory, "#");
 					navItems.Add(category);
 				}
-				category.children.Add(new NavItem(title, title + ".html"));
+				category.children.Add(new NavItem(title, SanitizeURL(title) + ".html"));
 			}
 		}
 
@@ -59,7 +66,7 @@ namespace AlanDuongCom
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(@"Out\" + p.title.ToLower() + ".html", p.Bake());
+				System.IO.File.WriteAllText(@"Out\" + SanitizeURL(p.title) + ".html", p.Bake());
 			}
 		}
 	}
