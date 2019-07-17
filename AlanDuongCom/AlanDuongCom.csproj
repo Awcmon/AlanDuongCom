@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataElement.cs" />
     <Compile Include="Nav.cs" />
+    <Compile Include="NavItem.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

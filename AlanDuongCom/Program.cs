@@ -17,6 +17,7 @@ namespace AlanDuongCom
 			Page index = new Page("Index", "index.html");
 			*/
 
+			/*
 			DataElement nav = new DataElement("nav.html");
 			DataElement home = new DataElement("navItem.html");
 			home.SetProperty("$HREF$", "#");
@@ -35,6 +36,15 @@ namespace AlanDuongCom
 
 			System.IO.Directory.CreateDirectory("Out");
 			System.IO.File.WriteAllText(@"Out\index.html", page.Bake());
+			*/
+
+			Site site = new Site();
+			site.AddPage("Index", "index.html", "");
+			site.AddPage("Projects", "index.html", "");
+			site.AddPage("Tools", "index.html", "");
+			site.AddPage("About", "index.html", "");
+			site.AddPage("Blog", "index.html", "");
+			site.Generate();
 		}
 	}
 }
