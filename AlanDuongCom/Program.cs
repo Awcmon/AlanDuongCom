@@ -43,8 +43,9 @@ namespace AlanDuongCom
 			site.AddPage("SUPERCRUISE", "supercruise.html", "Projects");
 			site.AddPage("TwoToner", "wip.html", "Projects");
 			site.AddPage("DominoComputer", "wip.html", "Projects");
+			site.AddPage("alanduong.com", "alanduongcom.html", "Projects");
 			site.AddPage("MIL/MOA Calculator", "wip.html", "Tools");
-			site.AddPage("About", "wip.html", "");
+			//site.AddPage("About", "wip.html", "");
 			site.AddPage("Blog", "wip.html", "");
 			site.Generate();
 		}

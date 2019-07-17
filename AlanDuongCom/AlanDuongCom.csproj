@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Data\alanduongcom.html" />
     <Content Include="Data\dropDownItem.html" />
     <Content Include="Data\dropUp.html" />
     <Content Include="Data\navItemActive.html" />
