@@ -8,7 +8,7 @@ namespace AlanDuongCom
 {
 	class NavItem
 	{
-		public NavItem children;
+		public List<NavItem> children;
 		public string title;
 		public string href;
 
@@ -16,6 +16,7 @@ namespace AlanDuongCom
 		{
 			this.title = title;
 			this.href = href;
+			children = new List<NavItem>();
 		}
 	}
 }

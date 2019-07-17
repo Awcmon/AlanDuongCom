@@ -26,15 +26,27 @@ namespace AlanDuongCom
 			SetProperty("$CONTENT$", System.IO.File.ReadAllText(@"Data\" + contentPath));
 		}
 
+		//can only handle navs with dropdowns one level deep.
 		public void GenerateNav()
 		{
 			DataElement output = new DataElement("nav.html");
 			foreach (NavItem i in navItems)
 			{
 				DataElement item;
-				if(title == i.title)
+				if (title == i.title)
 				{
 					item = new DataElement("navItemActive.html");
+				}
+				else if (i.children.Count > 0)
+				{
+					item = new DataElement("dropUp.html");
+					foreach (NavItem c in i.children)
+					{
+						DataElement child = new DataElement("dropDownItem.html");
+						child.SetProperty("$TITLE$", c.title);
+						child.SetProperty("$HREF$", c.href);
+						item.children.Add(child);
+					}
 				}
 				else
 				{

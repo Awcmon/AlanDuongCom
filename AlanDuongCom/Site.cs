@@ -18,10 +18,30 @@ namespace AlanDuongCom
 		public void AddPage(string title, string contentPath, string navCategory)
 		{
 			pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
-
+			
+			//add an entry for this page to the list of NavItems.
+			if(navCategory == null) { return; }
 			if (navCategory == "")
 			{
 				navItems.Add(new NavItem(title, title + ".html"));
+			}
+			else
+			{
+				NavItem category = null;
+				foreach(NavItem i in navItems)
+				{
+					if(i.title == navCategory) //if there already exists an item for that category
+					{
+						category = i;
+						break;
+					}
+				}
+				if(category == null) //if the category does not exist yet, create it
+				{
+					category = new NavItem(navCategory, "#");
+					navItems.Add(category);
+				}
+				category.children.Add(new NavItem(title, title + ".html"));
 			}
 		}
 
