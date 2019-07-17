@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace AlanDuongCom
 {
-
 	//Notes: if a property is set, the data better have that property.
 	//If there are children, there must be a $CHILDREN$ tag. 
 	//TODO: Add error handling for missing properties
@@ -30,6 +29,7 @@ namespace AlanDuongCom
 			properties[property] = value;
 		}
 
+		//turn this element and all its children into the final html
 		public string Bake()
 		{
 			string output = System.IO.File.ReadAllText(@"Data\" + dataPath);
@@ -39,6 +39,7 @@ namespace AlanDuongCom
 				output = output.Replace(p, properties[p]); //write the property
 			}
 
+			//bake the children
 			if(children.Count > 0)
 			{
 				string childrenOutput = "";

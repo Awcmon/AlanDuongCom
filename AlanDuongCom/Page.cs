@@ -9,38 +9,35 @@ namespace AlanDuongCom
 	class Page : DataElement
 	{
 		public string title;
-		//private string content;
-		//private string output;
-
-		//private string sitename;
 		private List<NavItem> navItems;
 
 		public Page(string title, string contentPath, string sitename, string templatePath, List<NavItem> navItems) : base(templatePath)
 		{
 			this.title = title;
-			//content = System.IO.File.ReadAllText(@"Data\" + contentPath);
 			this.navItems = navItems;
 
-			SetProperty("$TITLE$", sitename + " - " + title);
-			//SetProperty("$NAV$", GenerateNav().Bake());
+			SetProperty("$TITLE$", title + " | " + sitename );
 			SetProperty("$CONTENT$", System.IO.File.ReadAllText(@"Data\" + contentPath));
 		}
 
+		//generate the navbar after all the pages are added to the site.
+		//the navbar is generated per page because the active item is different for each page.
 		//can only handle navs with dropdowns one level deep.
+		//TODO: Add active item highlight to dropdown pages?
 		public void GenerateNav()
 		{
-			DataElement output = new DataElement("nav.html");
-			foreach (NavItem i in navItems)
+			DataElement output = new DataElement("nav.html"); //create the unpopulated navbar
+			foreach (NavItem i in navItems) //iterate through the navitems list populated when adding pages to the site
 			{
-				DataElement item;
+				DataElement item; //the html element for a particular page or dropdown category
 				if (title == i.title)
 				{
-					item = new DataElement("navItemActive.html");
+					item = new DataElement("navItemActive.html"); 
 				}
-				else if (i.children.Count > 0)
+				else if (i.children.Count > 0) //if the item has children, it is a dropdown category rather than a page.
 				{
 					item = new DataElement("dropUp.html");
-					foreach (NavItem c in i.children)
+					foreach (NavItem c in i.children) //populate the category with its pages
 					{
 						DataElement child = new DataElement("dropDownItem.html");
 						child.SetProperty("$TITLE$", c.title);
@@ -54,9 +51,9 @@ namespace AlanDuongCom
 				}
 				item.SetProperty("$TITLE$", i.title);
 				item.SetProperty("$HREF$", i.href);
-				output.children.Add(item);
+				output.children.Add(item); //append the item to the navbar
 			}
-			SetProperty("$NAV$", output.Bake());
+			SetProperty("$NAV$", output.Bake()); //bake the navbar DataElement into html to replace the $NAV$ macro or property or whatever with.
 		}
 	}
 }

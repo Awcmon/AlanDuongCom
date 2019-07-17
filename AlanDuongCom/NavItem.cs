@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlanDuongCom
 {
+	//this class is used soley to generate the navbar
 	class NavItem
 	{
 		public List<NavItem> children;

@@ -15,13 +15,14 @@ namespace AlanDuongCom
 		private string sitename;
 		private string templatePath;
 
-		public string SanitizeURL(string url)
+		//turn a string into only lowercase letters, numbers, and hyphens.
+		private string SanitizeURL(string url)
 		{
 			Regex rgx = new Regex("[^a-zA-Z0-9-]");
 			return rgx.Replace(url.ToLower(), "-");
 		}
 
-		//navCatetory, "" to show on the navBar without a category, null to not show at all
+		//navCategory: "" to show on the navBar without a category, null to not show at all
 		public void AddPage(string title, string contentPath, string navCategory)
 		{
 			pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
@@ -60,6 +61,7 @@ namespace AlanDuongCom
 			pages = new List<Page>();
 		}
 
+		//bake and write all the pages to the final html output
 		public void Generate()
 		{
 			System.IO.Directory.CreateDirectory("Out");
