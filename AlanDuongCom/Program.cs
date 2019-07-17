@@ -11,24 +11,30 @@ namespace AlanDuongCom
 	{
 		static void Main(string[] args)
 		{
-			string template = System.IO.File.ReadAllText(@"Data\basic.html");
-			string nav = System.IO.File.ReadAllText(@"Data\nav.html");
 			/*
-			foreach (string f in Directory.GetFiles("Data", "*.html"))
-			{
-				Console.WriteLine(f);
-			}
+			Page.SetNav("nav.html");
+			//AddPage(new Page("Index", "index.html"), true);
+			Page index = new Page("Index", "index.html");
 			*/
-			string indexContent = System.IO.File.ReadAllText(@"Data\index.html");
 
-			string index = String.Copy(template);
+			DataElement nav = new DataElement("nav.html");
+			DataElement home = new DataElement("navItem.html");
+			home.SetProperty("$HREF$", "#");
+			home.SetProperty("$TITLE$", "Home");
+			DataElement projects = new DataElement("navItem.html");
+			projects.SetProperty("$HREF$", "#");
+			projects.SetProperty("$TITLE$", "Projects");
+			nav.children.Add(home);
+			nav.children.Add(projects);
 
-			index = index.Replace("$CONTENT$", indexContent);
-			index = index.Replace("$NAV$", nav);
-			index = index.Replace("$TITLE$", "Alan Duong");
+			DataElement page = new DataElement("basic.html");
+			DataElement indexContent = new DataElement("index.html");
+			page.SetProperty("$TITLE$", "Alan Duong");
+			page.SetProperty("$NAV$", nav.Bake());
+			page.SetProperty("$CONTENT$", indexContent.Bake());
 
 			System.IO.Directory.CreateDirectory("Out");
-			System.IO.File.WriteAllText(@"Out\index.html", index);
+			System.IO.File.WriteAllText(@"Out\index.html", page.Bake());
 		}
 	}
 }

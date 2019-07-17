@@ -43,17 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataElement.cs" />
+    <Compile Include="Nav.cs" />
+    <Compile Include="Page.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Site.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Data\navItemActive.html" />
     <Content Include="Data\basic.html" />
     <Content Include="Data\index.html" />
     <Content Include="Data\nav.html" />
+    <Content Include="Data\navItem.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
