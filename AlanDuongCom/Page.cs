@@ -31,7 +31,15 @@ namespace AlanDuongCom
 			DataElement output = new DataElement("nav.html");
 			foreach (NavItem i in navItems)
 			{
-				DataElement item = new DataElement("navItem.html");
+				DataElement item;
+				if(title == i.title)
+				{
+					item = new DataElement("navItemActive.html");
+				}
+				else
+				{
+					item = new DataElement("navItem.html");
+				}
 				item.SetProperty("$TITLE$", i.title);
 				item.SetProperty("$HREF$", i.href);
 				output.children.Add(item);
