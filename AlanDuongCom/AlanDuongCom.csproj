@@ -66,6 +66,7 @@
     <Content Include="Data\navItem.html" />
     <Content Include="Data\supercruise.html" />
     <Content Include="Data\wip.html" />
+    <Content Include="js\convertMilMoa.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
