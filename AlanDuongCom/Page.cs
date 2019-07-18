@@ -16,7 +16,7 @@ namespace AlanDuongCom
 			this.title = title;
 			this.navItems = navItems;
 
-			SetProperty("$TITLE$", title + " | " + sitename );
+			SetProperty("$TITLE$", title + " - " + sitename );
 			SetProperty("$CONTENT$", System.IO.File.ReadAllText(@"Data\" + contentPath));
 		}
 
