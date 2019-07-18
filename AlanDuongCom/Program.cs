@@ -17,7 +17,7 @@ namespace AlanDuongCom
 			site.AddPage("TwoToner", "wip.html", "Projects");
 			site.AddPage("DominoComputer", "wip.html", "Projects");
 			site.AddPage("alanduong.com", "alanduongcom.html", "Projects");
-			site.AddPage("MIL/MOA Calculator", "wip.html", "Tools");
+			site.AddPage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools");
 			site.AddPage("Blog", "wip.html", "");
 			site.Generate();
 		}
