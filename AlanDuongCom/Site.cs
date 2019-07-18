@@ -64,11 +64,10 @@ namespace AlanDuongCom
 		//bake and write all the pages to the final html output
 		public void Generate()
 		{
-			System.IO.Directory.CreateDirectory("Out");
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(@"Out\" + SanitizeURL(p.title) + ".html", p.Bake());
+				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.title) + ".html", p.Bake());
 			}
 		}
 	}
