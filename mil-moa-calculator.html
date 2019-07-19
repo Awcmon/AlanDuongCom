@@ -110,8 +110,8 @@
 		<div class="col-lg-12 text-center">
 			<h1>Height/Angle/Distance Calculator</h1>
 			<h3>Presets:</h3>
-			<button type="button" class="btn btn-secondary">Metric</button>
-			<button type="button" class="btn btn-secondary">Imperial</button>
+			<button type="button" class="btn btn-secondary" id="btnMetric">Metric</button>
+			<button type="button" class="btn btn-secondary" id="btnImperial">Imperial</button>
 			<h3>Solve for:</h3>
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<label class="btn btn-secondary active">
@@ -130,49 +130,56 @@
 		<div class="col-sm-4 text-center">
 			<div class="form-group">
 				<label for="fDistance">Distance:</label>
-				<input type="text" class="form-control" id="fDistance">
-
-				<label for="selDistanceUnit">Unit:</label>
-				<select class="form-control" id="selDistanceUnit">
-					<option>mm</option>
-					<option>cm</option>
-					<option selected="selected">m</option>
-					<option>km</option>
-					<option>in</option>
-					<option>ft</option>
-					<option>yd</option>
-					<option>mi</option>
-				</select>
+				<div class="input-group">
+					<input type="text" class="form-control" id="fDistance">
+					<span class="input-group-addon">
+						<select class="form-control" id="selDistanceUnit">
+							<option>mm</option>
+							<option>cm</option>
+							<option selected="selected">m</option>
+							<option>km</option>
+							<option>in</option>
+							<option>ft</option>
+							<option>yd</option>
+							<option>mi</option>
+						</select>
+					</span>
+				</div>
+				
 			</div>
 		</div>
 		<div class="col-sm-4 text-center">
 			<div class="form-group">
 				<label for="fAngle">Angle:</label>
-				<input type="text" class="form-control" id="fAngle">
-
-				<label for="selAngleUnit">Unit:</label>
-				<select class="form-control" id="selAngleUnit">
-					<option selected="selected">MIL</option>
-					<option>MOA</option>
-				</select>
+				<div class="input-group">
+					<input type="text" class="form-control" id="fAngle">
+					<span class="input-group-addon">
+						<select class="form-control" id="selAngleUnit">
+							<option selected="selected">MIL</option>
+							<option>MOA</option>
+						</select>
+					</span>
+				</div>
 			</div>
 		</div>
 		<div class="col-sm-4 text-center">
 			<div class="form-group">
 				<label for="fHeight">Height:</label>
-				<input type="text" class="form-control" id="fHeight">
-
-				<label for="selHeightUnit">Unit:</label>
-				<select class="form-control" id="selHeightUnit">
-					<option>mm</option>
-					<option>cm</option>
-					<option selected="selected">m</option>
-					<option>km</option>
-					<option>in</option>
-					<option>ft</option>
-					<option>yd</option>
-					<option>mi</option>
-				</select>
+				<div class="input-group">
+					<input type="text" class="form-control" id="fHeight">
+					<span class="input-group-addon">
+						<select class="form-control" id="selHeightUnit">
+							<option>mm</option>
+							<option>cm</option>
+							<option selected="selected">m</option>
+							<option>km</option>
+							<option>in</option>
+							<option>ft</option>
+							<option>yd</option>
+							<option>mi</option>
+						</select>
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
