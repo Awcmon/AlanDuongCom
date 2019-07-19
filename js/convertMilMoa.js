@@ -111,6 +111,8 @@ function calculateFor() {
         }
     }
 }
+//TODO: round to decimal place
+//TODO: more presets
 window.onload = function () {
     //convert mil/moa stuff
     fMil = document.getElementById('fMil');

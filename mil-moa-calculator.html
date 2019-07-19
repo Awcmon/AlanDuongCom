@@ -88,7 +88,21 @@
 			<h1>MIL/MOA Conversion</h1>
 			<p>Update one of the fields and the others will update.</p>
 			<p>Calculated using 3.4377468 MOA per MIL.</p>
-			<p>Round to <input type="number" id="fDecimals" value="1"> decimals</p>
+			<!--<p>Round to <input type="number" id="fDecimals" value="1"> decimals</p>-->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 text-center">
+
+		</div>
+		<div class="col-md-4 text-center">
+			<div class="form-group">
+				<label for="fDecimals">Decimals to round to:</label>
+				<input type="number" class="form-control" id="fDecimals" value="1">
+			</div>
+		</div>
+		<div class="col-md-4 text-center">
+
 		</div>
 	</div>
 	<div class="row">
@@ -108,7 +122,7 @@
 	</div>
 	<div class="mt-5 row">
 		<div class="col-lg-12 text-center">
-			<h1>Height/Angle/Distance Calculator</h1>
+			<h1>Ranging Calculator</h1>
 			<h3>Presets:</h3>
 			<button type="button" class="btn btn-secondary" id="btnMetric">Metric</button>
 			<button type="button" class="btn btn-secondary" id="btnImperial">Imperial</button>
@@ -127,7 +141,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4 text-center">
+		<div class="col-md-4 text-center">
 			<div class="form-group">
 				<label for="fDistance">Distance:</label>
 				<div class="input-group">
@@ -145,10 +159,10 @@
 						</select>
 					</span>
 				</div>
-				
+
 			</div>
 		</div>
-		<div class="col-sm-4 text-center">
+		<div class="col-md-4 text-center">
 			<div class="form-group">
 				<label for="fAngle">Angle:</label>
 				<div class="input-group">
@@ -162,7 +176,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-4 text-center">
+		<div class="col-md-4 text-center">
 			<div class="form-group">
 				<label for="fHeight">Height:</label>
 				<div class="input-group">
