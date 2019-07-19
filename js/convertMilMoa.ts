@@ -84,16 +84,23 @@ function presetImperial() {
 
 //unit, how many meters that unit is, or meters/unit
 //doing it the other way around actually results in numbers w/ longer decimals in the table
-let distConversions = [
-	["mm", 0.001],
-	["cm", 0.01],
-	["m", 1.0],
-	["km", 1000.0],
-	["in", 0.0254],
-	["ft", 0.3048],
-	["yd", 0.9144],
-	["mi", 1609.344]
-];
+const distConversions: Record<string, number> = {
+	"mm": 0.001,
+	"cm": 0.01,
+	"m": 1.0,
+	"km": 1000.0,
+	"in": 0.0254,
+	"ft": 0.3048,
+	"yd": 0.9144,
+	"mi": 1609.344
+}
+
+//unit, mils/unit
+const angConversions: Record<string, number> = {
+	"MIL": 1.0,
+	"MOA": 0.2908882087
+}
+
 
 function lengthUnitToMeter(length: number, unit: string): number {
 	return length * distConversions[unit];
@@ -105,18 +112,25 @@ function lengthMeterToUnit(length: number, unit: string): number {
 
 function calculateFor() {
 	if (solveFor === "distance") {
-		fAngle.disabled = false;
-		fHeight.disabled = false;
+		if (fAngle.value !== "" && fHeight.value !== "") {
+			let ang = parseFloat(fAngle.value) * angConversions[selAngleUnit.value]; //angle in rads
+			let h = parseFloat(fHeight.value) * distConversions[selHeightUnit.value]; //height in meters
+			fDistance.value = ((h / Math.tan(ang / 1000.0)) / distConversions[selDistanceUnit.value]).toString();
+		}
 	}
 	else if (solveFor === "angle") {
-		fDistance.disabled = false;
-		fAngle.disabled = true;
-		fHeight.disabled = false;
+		if (fDistance.value !== "" && fHeight.value !== "") {
+			let d = parseFloat(fDistance.value) * distConversions[selDistanceUnit.value]; //distance in meters
+			let h = parseFloat(fHeight.value) * distConversions[selHeightUnit.value]; //height in meters
+			fAngle.value = ((Math.atan(h / d) * 1000.0) / angConversions[selAngleUnit.value]).toString();
+		}
 	}
 	else if (solveFor === "height") {
-		fDistance.disabled = false;
-		fAngle.disabled = false;
-		fHeight.disabled = true;
+		if (fDistance.value !== "" && fAngle.value !== "") {
+			let d = parseFloat(fDistance.value) * distConversions[selDistanceUnit.value]; //distance in meters
+			let ang = parseFloat(fAngle.value) * angConversions[selAngleUnit.value]; //angle in rads
+			fHeight.value = ((d * Math.tan(ang / 1000.0)) / distConversions[selHeightUnit.value]).toString();
+		}
 	}
 }
 
@@ -152,6 +166,13 @@ window.onload = () => {
 	for (let i = 0; i < radioSolveFor.length; i++) {
 		radioSolveFor[i].onchange = updateSolveFor; 
 	}
+
+	fDistance.addEventListener("change", (e: Event) => calculateFor());
+	fAngle.addEventListener("change", (e: Event) => calculateFor());
+	fHeight.addEventListener("change", (e: Event) => calculateFor());
+	selDistanceUnit.onchange = calculateFor;
+	selAngleUnit.onchange = calculateFor;
+	selHeightUnit.onchange = calculateFor;
 
 	updateSolveFor();
 }
