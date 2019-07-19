@@ -55,7 +55,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="js\calcMilMoa.ts" />
+    <TypeScriptCompile Include="js\convertMilMoa.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\alanduongcom.html" />
@@ -69,7 +69,7 @@
     <Content Include="Data\navItem.html" />
     <Content Include="Data\supercruise.html" />
     <Content Include="Data\wip.html" />
-    <Content Include="js\convertMilMoa.js" />
+    <Content Include="js\convertMilMoa_old.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

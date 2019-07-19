@@ -9,12 +9,14 @@ let rawMil = 1.0;
 let rawMoa = 1.0;
 
 function calculateMoa() {
-	rawMoa = parseFloat(fMil.value) * moaPerMil;
+	rawMil = parseFloat(fMil.value);
+	rawMoa = rawMil * moaPerMil;
 	fMoa.value = rawMoa.toFixed(parseInt(fDecimals.value));
 }
 
 function calculateMil() {
-	rawMil = parseFloat(fMoa.value) / moaPerMil;
+	rawMoa = parseFloat(fMoa.value);
+	rawMil = rawMoa / moaPerMil;
 	fMil.value = rawMil.toFixed(parseInt(fDecimals.value));
 }
 

@@ -1,26 +1,30 @@
-﻿/*
-window.onload = () => {
-	var mil = document.getElementById('fMil');
-	mil.addEventListener("onchange", (e) => test());
-	console.log("test");
-};
-*/
-
+var fMil;
+var fMoa;
+var fDecimals;
+var moaPerMil = 3.4377468;
+var rawMil = 1.0;
+var rawMoa = 1.0;
+function calculateMoa() {
+    rawMil = parseFloat(fMil.value);
+    rawMoa = rawMil * moaPerMil;
+    fMoa.value = rawMoa.toFixed(parseInt(fDecimals.value));
+}
+function calculateMil() {
+    rawMoa = parseFloat(fMoa.value);
+    rawMil = rawMoa / moaPerMil;
+    fMil.value = rawMil.toFixed(parseInt(fDecimals.value));
+}
+function updateFields() {
+    fMoa.value = rawMoa.toFixed(parseInt(fDecimals.value));
+    fMil.value = rawMil.toFixed(parseInt(fDecimals.value));
+}
 window.onload = function () {
-	var fMil = document.getElementById('fMil');
-	var fMoa = document.getElementById('fMoa');
-	var fDecimals = document.getElementById('fDecimals');
-
-	var moaPerMil = 3.4377468;
-
-	fMil.addEventListener("change", function () {
-		fMoa.value = (parseFloat(fMil.value) * moaPerMil).toFixed(parseInt(fDecimals.value));
-	});
-
-	fMoa.addEventListener("change", function () {
-		fMil.value = (parseFloat(fMoa.value) / moaPerMil).toFixed(parseInt(fDecimals.value));
-	});
-
-	//initialize the moa field
-	fMoa.value = (parseFloat(fMil.value) * moaPerMil).toFixed(parseInt(fDecimals.value));
+    fMil = document.getElementById('fMil');
+    fMoa = document.getElementById('fMoa');
+    fDecimals = document.getElementById('fDecimals');
+    fMil.addEventListener("change", function (e) { return calculateMoa(); });
+    fMoa.addEventListener("change", function (e) { return calculateMil(); });
+    fDecimals.addEventListener("change", function (e) { return updateFields(); });
+    calculateMoa(); //initialize the MOA field
 };
+//# sourceMappingURL=convertMilMoa.js.map
