@@ -23,7 +23,7 @@ namespace AlanDuongCom
 			site.AddPage("TwoToner", "wip.html", "Projects");
 			site.AddPage("DominoComputer", "wip.html", "Projects");
 			site.AddPage("alanduong.com", "alanduongcom.html", "Projects");
-			site.AddPage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AppendToProperty("#SCRIPTS#", Script("js/convertMilMoa.js"));
+			site.AddPage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AppendToProperty("#SCRIPTS#", Script("js/calcMilMoa.js"));
 			site.AddPage("Blog", "wip.html", "");
 			site.Generate();
 		}

@@ -54,7 +54,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="js\calcMilMoa.ts" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Data\alanduongcom.html" />
     <Content Include="Data\calculatorMilMoa.html" />
