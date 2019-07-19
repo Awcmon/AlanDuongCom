@@ -144,9 +144,11 @@ window.onload = () => {
 	fMoa = <HTMLInputElement>document.getElementById('fMoa');
 	fDecimals = <HTMLInputElement>document.getElementById('fDecimals');
 
-	fMil.addEventListener("change", (e: Event) => calculateMoa());
-	fMoa.addEventListener("change", (e: Event) => calculateMil());
+	fMil.addEventListener("input", (e: Event) => calculateMoa());
+	fMoa.addEventListener("input", (e: Event) => calculateMil());
 	fDecimals.addEventListener("change", (e: Event) => updateFields());
+	fMil.addEventListener("focus", function () { this.select() });
+	fMoa.addEventListener("focus", function () { this.select() });
 
 	calculateMoa(); //initialize the MOA field
 
@@ -166,6 +168,7 @@ window.onload = () => {
 	selAngleUnit = <HTMLSelectElement>document.getElementById('selAngleUnit');
 	selHeightUnit = <HTMLSelectElement>document.getElementById('selHeightUnit');
 
+	//add action listeners
 	btnMetricRanging.addEventListener("click", (e: Event) => setPreset('m', 'MIL', 'm', 0));
 	btnImperialRanging.addEventListener("click", (e: Event) => setPreset('yd', 'MOA', 'ft', 0));
 	btnImperialMilRanging.addEventListener("click", (e: Event) => setPreset('yd', 'MIL', 'ft', 0));
@@ -175,9 +178,15 @@ window.onload = () => {
 		radioSolveFor[i].onchange = updateSolveFor; 
 	}
 
-	fDistance.addEventListener("change", (e: Event) => calculateFor());
-	fAngle.addEventListener("change", (e: Event) => calculateFor());
-	fHeight.addEventListener("change", (e: Event) => calculateFor());
+	fDistance.addEventListener("input", (e: Event) => calculateFor());
+	fAngle.addEventListener("input", (e: Event) => calculateFor());
+	fHeight.addEventListener("input", (e: Event) => calculateFor());
+
+	//select fields on enter
+	fDistance.addEventListener("focus", function () { this.select() });
+	fAngle.addEventListener("focus", function () { this.select() });
+	fHeight.addEventListener("focus", function () { this.select() });
+
 	selDistanceUnit.onchange = calculateFor;
 	selAngleUnit.onchange = calculateFor;
 	selHeightUnit.onchange = calculateFor;

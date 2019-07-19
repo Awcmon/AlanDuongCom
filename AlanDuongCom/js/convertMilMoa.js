@@ -121,9 +121,11 @@ window.onload = function () {
     fMil = document.getElementById('fMil');
     fMoa = document.getElementById('fMoa');
     fDecimals = document.getElementById('fDecimals');
-    fMil.addEventListener("change", function (e) { return calculateMoa(); });
-    fMoa.addEventListener("change", function (e) { return calculateMil(); });
+    fMil.addEventListener("input", function (e) { return calculateMoa(); });
+    fMoa.addEventListener("input", function (e) { return calculateMil(); });
     fDecimals.addEventListener("change", function (e) { return updateFields(); });
+    fMil.addEventListener("focus", function () { this.select(); });
+    fMoa.addEventListener("focus", function () { this.select(); });
     calculateMoa(); //initialize the MOA field
     //ranger calculator stuff
     fDistance = document.getElementById('fDistance');
@@ -137,6 +139,7 @@ window.onload = function () {
     selDistanceUnit = document.getElementById('selDistanceUnit');
     selAngleUnit = document.getElementById('selAngleUnit');
     selHeightUnit = document.getElementById('selHeightUnit');
+    //add action listeners
     btnMetricRanging.addEventListener("click", function (e) { return setPreset('m', 'MIL', 'm', 0); });
     btnImperialRanging.addEventListener("click", function (e) { return setPreset('yd', 'MOA', 'ft', 0); });
     btnImperialMilRanging.addEventListener("click", function (e) { return setPreset('yd', 'MIL', 'ft', 0); });
@@ -144,9 +147,13 @@ window.onload = function () {
     for (var i = 0; i < radioSolveFor.length; i++) {
         radioSolveFor[i].onchange = updateSolveFor;
     }
-    fDistance.addEventListener("change", function (e) { return calculateFor(); });
-    fAngle.addEventListener("change", function (e) { return calculateFor(); });
-    fHeight.addEventListener("change", function (e) { return calculateFor(); });
+    fDistance.addEventListener("input", function (e) { return calculateFor(); });
+    fAngle.addEventListener("input", function (e) { return calculateFor(); });
+    fHeight.addEventListener("input", function (e) { return calculateFor(); });
+    //select fields on enter
+    fDistance.addEventListener("focus", function () { this.select(); });
+    fAngle.addEventListener("focus", function () { this.select(); });
+    fHeight.addEventListener("focus", function () { this.select(); });
     selDistanceUnit.onchange = calculateFor;
     selAngleUnit.onchange = calculateFor;
     selHeightUnit.onchange = calculateFor;
