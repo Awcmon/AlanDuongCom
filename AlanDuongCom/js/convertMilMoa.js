@@ -115,7 +115,6 @@ function calculateFor() {
 }
 //TODO: round to decimal place
 //TODO: more presets
-//TODO: clear field on enter?
 window.onload = function () {
     //convert mil/moa stuff
     fMil = document.getElementById('fMil');
