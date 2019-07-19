@@ -88,7 +88,7 @@
 			<h1>MIL/MOA Conversion</h1>
 			<p>Update one of the fields and the others will update.</p>
 			<p>Calculated using 3.4377468 MOA per MIL.</p>
-			<p>Round to <input type="text" id="fDecimals" value="1"> decimals</p>
+			<p>Round to <input type="number" id="fDecimals" value="1"> decimals</p>
 		</div>
 	</div>
 	<div class="row">
@@ -96,13 +96,13 @@
 			<!--MIL: <input type="text" id="fMil" value="1">-->
 			<div class="form-group">
 				<label for="fMil">MIL:</label>
-				<input type="text" class="form-control" id="fMil" value="1">
+				<input type="number" class="form-control" id="fMil" step="0.1" value="1">
 			</div>
 		</div>
 		<div class="col-sm-6 text-center">
 			<div class="form-group">
 				<label for="fMoa">MOA:</label>
-				<input type="text" class="form-control" id="fMoa">
+				<input type="number" class="form-control" id="fMoa" step="0.25">
 			</div>
 		</div>
 	</div>
@@ -115,13 +115,13 @@
 			<h3>Solve for:</h3>
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<label class="btn btn-secondary active">
-					<input type="radio" name="solveFor" id="distance" autocomplete="off" checked> Distance
+					<input type="radio" name="radioSolveFor" id="distance" value="distance" autocomplete="off" checked> Distance
 				</label>
 				<label class="btn btn-secondary">
-					<input type="radio" name="solveFor" id="angle" autocomplete="off"> Angle
+					<input type="radio" name="radioSolveFor" id="angle" value="angle" autocomplete="off"> Angle
 				</label>
 				<label class="btn btn-secondary">
-					<input type="radio" name="solveFor" id="height" autocomplete="off"> Height
+					<input type="radio" name="radioSolveFor" id="height" value="height" autocomplete="off"> Height
 				</label>
 			</div>
 		</div>
