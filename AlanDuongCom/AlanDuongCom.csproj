@@ -73,6 +73,11 @@
   <PropertyGroup>
     <PostBuildEvent>if not exist $(ProjectDir)$(OutDir)Data\ mkdir $(ProjectDir)$(OutDir)Data\
 if exist $(ProjectDir)$(OutDir)Data\ del /q $(ProjectDir)$(OutDir)Data\
-copy $(ProjectDir)Data\* $(ProjectDir)$(OutDir)Data\</PostBuildEvent>
+copy $(ProjectDir)Data\* $(ProjectDir)$(OutDir)Data\
+
+if not exist $(SolutionDir)js\ mkdir $(SolutionDir)js\
+if exist $(SolutionDir)js\ del /q $(SolutionDir)js\
+copy $(ProjectDir)js\* $(SolutionDir)js\
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

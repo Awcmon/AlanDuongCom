@@ -33,6 +33,11 @@ namespace AlanDuongCom
 			properties[property].Add(elem);
 		}
 
+		public void AppendToProperty(string property, string strLiteral)
+		{
+			AppendToProperty(property, new LiteralElement(strLiteral));
+		}
+
 		//turn this element and all its children into the final html
 		public virtual string Bake()
 		{

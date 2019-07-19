@@ -23,7 +23,8 @@ namespace AlanDuongCom
 		}
 
 		//navCategory: "" to show on the navBar without a category, null to not show at all
-		public void AddPage(string title, string contentPath, string navCategory)
+		//return the page that was added
+		public Page AddPage(string title, string contentPath, string navCategory)
 		{
 			Page page = new Page(templatePath, title, navItems);
 
@@ -36,7 +37,7 @@ namespace AlanDuongCom
 			pages.Add(page);
 			
 			//add an entry for this page to the list of NavItems.
-			if(navCategory == null) { return; }
+			if(navCategory == null) { return page; }
 			if (navCategory == "")
 			{
 				navItems.Add(new NavItem(title, SanitizeURL(title) + ".html"));
@@ -59,6 +60,7 @@ namespace AlanDuongCom
 				}
 				category.children.Add(new NavItem(title, SanitizeURL(title) + ".html"));
 			}
+			return page;
 		}
 
 		public Site(string sitename, string templatePath)
