@@ -2,55 +2,67 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AlanDuongCom
 {
-	//Notes: if a property is set, the data better have that property.
-	//If there are children, there must be a $CHILDREN$ tag. 
-	//TODO: Add error handling for missing properties
+	//TODO: Add warning for when a property is set, but isn't in a given element
+	//RESOLVED: handle when a property is in an element, but is not set
 	class DataElement
 	{
 		private string dataPath;
 
-		public List<DataElement> children;
+		public string Id { get; set; }
 
-		private Dictionary<string, string> properties;
+		private Dictionary<string, List<DataElement>> properties;
 
-		public DataElement(string dataPath)
+		public DataElement(string dataPath = "", string id = "")
 		{
 			this.dataPath = dataPath;
-			properties = new Dictionary<string, string>();
-			children = new List<DataElement>();
+			properties = new Dictionary<string, List<DataElement>>();
+			Id = id;
 		}
 
-		public void SetProperty(string property, string value)
+		public void AppendToProperty(string property, DataElement elem)
 		{
-			properties[property] = value;
+			if(!properties.ContainsKey(property))
+			{
+				properties[property] = new List<DataElement>();
+			}
+			properties[property].Add(elem);
 		}
 
 		//turn this element and all its children into the final html
-		public string Bake()
+		public virtual string Bake()
 		{
-			string output = System.IO.File.ReadAllText(@"Data\" + dataPath);
+			string output = "";
+			if(dataPath != null && dataPath != "")
+			{
+				output = System.IO.File.ReadAllText(@"Data\" + dataPath);
+			}
 
+			//for each property
 			foreach(string p in properties.Keys)
 			{
-				output = output.Replace(p, properties[p]); //write the property
-			}
-
-			//bake the children
-			if(children.Count > 0)
-			{
-				string childrenOutput = "";
-				foreach (DataElement e in children)
+				//bake its children elements
+				List<DataElement> children = properties[p];
+				if (children != null && children.Count > 0)
 				{
-					childrenOutput += e.Bake();
+					string childrenOutput = "";
+					foreach (DataElement e in children)
+					{
+						childrenOutput += e.Bake();
+					}
+					output = output.Replace(p, childrenOutput); //write to the property
 				}
-				output = output.Replace("$CHILDREN$", childrenOutput);
 			}
 
-			return output;
+			//replace all unset properties in the page with an empty string
+			//note: a property can be any alphanumeric string with hyphens and underscores surrounded by #'s
+			Regex rgx = new Regex(@"#[a-zA-Z0-9_-]*#");
+			return rgx.Replace(output, "");
+			//return output;
 		}
 
 	}

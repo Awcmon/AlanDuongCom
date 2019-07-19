@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataElement.cs" />
+    <Compile Include="LiteralElement.cs" />
     <Compile Include="NavItem.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Program.cs" />

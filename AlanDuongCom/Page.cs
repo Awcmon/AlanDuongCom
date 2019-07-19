@@ -8,16 +8,11 @@ namespace AlanDuongCom
 {
 	class Page : DataElement
 	{
-		public string title;
 		private List<NavItem> navItems;
 
-		public Page(string title, string contentPath, string sitename, string templatePath, List<NavItem> navItems) : base(templatePath)
+		public Page(string templatePath, string id, List<NavItem> navItems) : base(templatePath, id)
 		{
-			this.title = title;
 			this.navItems = navItems;
-
-			SetProperty("$TITLE$", title + " - " + sitename );
-			SetProperty("$CONTENT$", System.IO.File.ReadAllText(@"Data\" + contentPath));
 		}
 
 		//generate the navbar after all the pages are added to the site.
@@ -30,7 +25,7 @@ namespace AlanDuongCom
 			foreach (NavItem i in navItems) //iterate through the navitems list populated when adding pages to the site
 			{
 				DataElement item; //the html element for a particular page or dropdown category
-				if (title == i.title)
+				if (Id == i.title)
 				{
 					item = new DataElement("navItemActive.html"); 
 				}
@@ -40,20 +35,20 @@ namespace AlanDuongCom
 					foreach (NavItem c in i.children) //populate the category with its pages
 					{
 						DataElement child = new DataElement("dropDownItem.html");
-						child.SetProperty("$TITLE$", c.title);
-						child.SetProperty("$HREF$", c.href);
-						item.children.Add(child);
+						child.AppendToProperty("#TITLE#", new LiteralElement(c.title));
+						child.AppendToProperty("#HREF#", new LiteralElement(c.href));
+						item.AppendToProperty("#CHILDREN#", child);
 					}
 				}
 				else
 				{
 					item = new DataElement("navItem.html");
 				}
-				item.SetProperty("$TITLE$", i.title);
-				item.SetProperty("$HREF$", i.href);
-				output.children.Add(item); //append the item to the navbar
+				item.AppendToProperty("#TITLE#", new LiteralElement(i.title));
+				item.AppendToProperty("#HREF#", new LiteralElement(i.href));
+				output.AppendToProperty("#CHILDREN#", item); //append the item to the navbar
 			}
-			SetProperty("$NAV$", output.Bake()); //bake the navbar DataElement into html to replace the $NAV$ macro or property or whatever with.
+			AppendToProperty("#NAV#", output); //bake the navbar DataElement into html to replace the #NAV# macro or property or whatever with.
 		}
 	}
 }

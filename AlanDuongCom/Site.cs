@@ -25,7 +25,15 @@ namespace AlanDuongCom
 		//navCategory: "" to show on the navBar without a category, null to not show at all
 		public void AddPage(string title, string contentPath, string navCategory)
 		{
-			pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
+			Page page = new Page(templatePath, title, navItems);
+
+			page.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + sitename)); //page title
+
+			DataElement pageContent = new DataElement(contentPath);
+			page.AppendToProperty("#CONTENT#", pageContent);
+
+			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
+			pages.Add(page);
 			
 			//add an entry for this page to the list of NavItems.
 			if(navCategory == null) { return; }
@@ -67,7 +75,7 @@ namespace AlanDuongCom
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.title) + ".html", p.Bake());
+				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.Id) + ".html", p.Bake());
 			}
 		}
 	}
