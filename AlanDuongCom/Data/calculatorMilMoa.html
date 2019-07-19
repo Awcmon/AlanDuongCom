@@ -39,23 +39,30 @@
 	<div class="mt-5 row">
 		<div class="col-lg-12 text-center">
 			<h1>Ranging Calculator</h1>
-			<h3>Presets:</h3>
-			<button type="button" class="btn btn-secondary" id="btnMetric">Metric</button>
-			<button type="button" class="btn btn-secondary" id="btnImperial">Imperial</button>
-			<h3>Solve for:</h3>
-			<div class="btn-group btn-group-toggle" data-toggle="buttons">
-				<label class="btn btn-secondary active">
-					<input type="radio" name="radioSolveFor" id="distance" value="distance" autocomplete="off" checked> Distance
-				</label>
-				<label class="btn btn-secondary">
-					<input type="radio" name="radioSolveFor" id="angle" value="angle" autocomplete="off"> Angle
-				</label>
-				<label class="btn btn-secondary">
-					<input type="radio" name="radioSolveFor" id="height" value="height" autocomplete="off"> Height
-				</label>
+
+			<label for="presets">Presets:</label>
+			<div id="presets">
+				<button type="button" class="btn btn-secondary" id="btnMetricRanging">Metric Ranging</button>
+				<button type="button" class="btn btn-secondary" id="btnImperialRanging">Imperial Ranging</button>
+				<button type="button" class="btn btn-secondary" id="btnImperialMilRanging">Imperial Mil Ranging</button>
+				<button type="button" class="btn btn-secondary" id="btnImperialGroupMOA">Imperial Group MOA</button>
+			</div>
+
+			<label for="divSolveFor">Solve for:</label>
+			<div id="divSolveFor">
+				<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					<label class="btn btn-secondary active">
+						<input type="radio" name="radioSolveFor" id="distance" value="distance" autocomplete="off" checked> Distance
+					</label>
+					<label class="btn btn-secondary">
+						<input type="radio" name="radioSolveFor" id="angle" value="angle" autocomplete="off"> Angle
+					</label>
+					<label class="btn btn-secondary">
+						<input type="radio" name="radioSolveFor" id="height" value="height" autocomplete="off"> Height
+					</label>
+				</div>
 			</div>
 		</div>
-	</div>
 	<div class="row">
 		<div class="col-md-4 text-center">
 			<div class="form-group">

@@ -31,8 +31,10 @@ let fDistance: HTMLInputElement;
 let fAngle: HTMLInputElement;
 let fHeight: HTMLInputElement;
 
-let btnMetric: HTMLButtonElement;
-let btnImperial: HTMLButtonElement;
+let btnMetricRanging: HTMLButtonElement;
+let btnImperialRanging: HTMLButtonElement;
+let btnImperialMilRanging: HTMLButtonElement;
+let btnImperialGroupMOA: HTMLButtonElement;
 
 let radioSolveFor: NodeListOf<HTMLInputElement>;
 
@@ -70,16 +72,15 @@ function updateSolveFor() : any {
 	}
 }
 
-function presetMetric() {
-	selDistanceUnit.value = 'm';
-	selAngleUnit.value = 'MIL';
-	selHeightUnit.value = 'm';
-}
-
-function presetImperial() {
-	selDistanceUnit.value = 'yd';
-	selAngleUnit.value = 'MOA';
-	selHeightUnit.value = 'ft';
+function setPreset(distUnit:string, angleUnit:string, heightUnit:string, solveForId:number) {
+	selDistanceUnit.value = distUnit;
+	selAngleUnit.value = angleUnit;
+	selHeightUnit.value = heightUnit;
+	radioSolveFor[solveForId].click();
+	fDistance.value = "";
+	fAngle.value = "";
+	fHeight.value = "";
+	calculateFor();
 }
 
 //unit, how many meters that unit is, or meters/unit
@@ -136,6 +137,7 @@ function calculateFor() {
 
 //TODO: round to decimal place
 //TODO: more presets
+//TODO: clear field on enter?
 window.onload = () => {
 	//convert mil/moa stuff
 	fMil = <HTMLInputElement>document.getElementById('fMil');
@@ -153,8 +155,10 @@ window.onload = () => {
 	fAngle = <HTMLInputElement>document.getElementById('fAngle');
 	fHeight = <HTMLInputElement>document.getElementById('fHeight');
 
-	btnMetric = <HTMLButtonElement>document.getElementById('btnMetric');
-	btnImperial = <HTMLButtonElement>document.getElementById('btnImperial');
+	btnMetricRanging = <HTMLButtonElement>document.getElementById('btnMetricRanging');
+	btnImperialRanging = <HTMLButtonElement>document.getElementById('btnImperialRanging');
+	btnImperialMilRanging = <HTMLButtonElement>document.getElementById('btnImperialMilRanging');
+	btnImperialGroupMOA = <HTMLButtonElement>document.getElementById('btnImperialGroupMOA');
 
 	radioSolveFor = <NodeListOf<HTMLInputElement>>document.getElementsByName('radioSolveFor');
 
@@ -162,8 +166,10 @@ window.onload = () => {
 	selAngleUnit = <HTMLSelectElement>document.getElementById('selAngleUnit');
 	selHeightUnit = <HTMLSelectElement>document.getElementById('selHeightUnit');
 
-	btnMetric.addEventListener("click", (e: Event) => presetMetric());
-	btnImperial.addEventListener("click", (e: Event) => presetImperial());
+	btnMetricRanging.addEventListener("click", (e: Event) => setPreset('m', 'MIL', 'm', 0));
+	btnImperialRanging.addEventListener("click", (e: Event) => setPreset('yd', 'MOA', 'ft', 0));
+	btnImperialMilRanging.addEventListener("click", (e: Event) => setPreset('yd', 'MIL', 'ft', 0));
+	btnImperialGroupMOA.addEventListener("click", (e: Event) => setPreset('yd', 'MOA', 'in', 1));
 
 	for (let i = 0; i < radioSolveFor.length; i++) {
 		radioSolveFor[i].onchange = updateSolveFor; 

@@ -23,8 +23,10 @@ function updateFields() {
 var fDistance;
 var fAngle;
 var fHeight;
-var btnMetric;
-var btnImperial;
+var btnMetricRanging;
+var btnImperialRanging;
+var btnImperialMilRanging;
+var btnImperialGroupMOA;
 var radioSolveFor;
 var selDistanceUnit;
 var selAngleUnit;
@@ -55,15 +57,15 @@ function updateSolveFor() {
         fHeight.disabled = true;
     }
 }
-function presetMetric() {
-    selDistanceUnit.value = 'm';
-    selAngleUnit.value = 'MIL';
-    selHeightUnit.value = 'm';
-}
-function presetImperial() {
-    selDistanceUnit.value = 'yd';
-    selAngleUnit.value = 'MOA';
-    selHeightUnit.value = 'ft';
+function setPreset(distUnit, angleUnit, heightUnit, solveForId) {
+    selDistanceUnit.value = distUnit;
+    selAngleUnit.value = angleUnit;
+    selHeightUnit.value = heightUnit;
+    radioSolveFor[solveForId].click();
+    fDistance.value = "";
+    fAngle.value = "";
+    fHeight.value = "";
+    calculateFor();
 }
 //unit, how many meters that unit is, or meters/unit
 //doing it the other way around actually results in numbers w/ longer decimals in the table
@@ -113,6 +115,7 @@ function calculateFor() {
 }
 //TODO: round to decimal place
 //TODO: more presets
+//TODO: clear field on enter?
 window.onload = function () {
     //convert mil/moa stuff
     fMil = document.getElementById('fMil');
@@ -126,14 +129,18 @@ window.onload = function () {
     fDistance = document.getElementById('fDistance');
     fAngle = document.getElementById('fAngle');
     fHeight = document.getElementById('fHeight');
-    btnMetric = document.getElementById('btnMetric');
-    btnImperial = document.getElementById('btnImperial');
+    btnMetricRanging = document.getElementById('btnMetricRanging');
+    btnImperialRanging = document.getElementById('btnImperialRanging');
+    btnImperialMilRanging = document.getElementById('btnImperialMilRanging');
+    btnImperialGroupMOA = document.getElementById('btnImperialGroupMOA');
     radioSolveFor = document.getElementsByName('radioSolveFor');
     selDistanceUnit = document.getElementById('selDistanceUnit');
     selAngleUnit = document.getElementById('selAngleUnit');
     selHeightUnit = document.getElementById('selHeightUnit');
-    btnMetric.addEventListener("click", function (e) { return presetMetric(); });
-    btnImperial.addEventListener("click", function (e) { return presetImperial(); });
+    btnMetricRanging.addEventListener("click", function (e) { return setPreset('m', 'MIL', 'm', 0); });
+    btnImperialRanging.addEventListener("click", function (e) { return setPreset('yd', 'MOA', 'ft', 0); });
+    btnImperialMilRanging.addEventListener("click", function (e) { return setPreset('yd', 'MIL', 'ft', 0); });
+    btnImperialGroupMOA.addEventListener("click", function (e) { return setPreset('yd', 'MOA', 'in', 1); });
     for (var i = 0; i < radioSolveFor.length; i++) {
         radioSolveFor[i].onchange = updateSolveFor;
     }
