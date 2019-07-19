@@ -169,14 +169,19 @@
 			</div>
 		</div>
 	</div>
+	<br />
 	<div class="row">
 		<div class="col-md-4 text-center">
 			<div class="form-group">
-				<label for="fDistance">Distance:</label>
 				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Distance</span>
+					</div>
+
 					<input type="number" class="form-control" id="fDistance">
-					<span class="input-group-addon">
-						<select class="form-control" id="selDistanceUnit">
+
+					<div class="input-group-append">
+						<select class="custom-select" id="selDistanceUnit">
 							<option>mm</option>
 							<option>cm</option>
 							<option selected="selected">m</option>
@@ -186,32 +191,38 @@
 							<option>yd</option>
 							<option>mi</option>
 						</select>
-					</span>
+					</div>
 				</div>
 
 			</div>
 		</div>
 		<div class="col-md-4 text-center">
 			<div class="form-group">
-				<label for="fAngle">Angle:</label>
 				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Angle</span>
+					</div>
 					<input type="number" class="form-control" id="fAngle" step="0.1">
-					<span class="input-group-addon">
-						<select class="form-control" id="selAngleUnit">
+					<div class="input-group-append">
+						<select class="custom-select" id="selAngleUnit">
 							<option selected="selected">MIL</option>
 							<option>MOA</option>
 						</select>
-					</span>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4 text-center">
 			<div class="form-group">
-				<label for="fHeight">Height:</label>
 				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Height</span>
+					</div>
+
 					<input type="number" class="form-control" id="fHeight">
-					<span class="input-group-addon">
-						<select class="form-control" id="selHeightUnit">
+
+					<div class="input-group-append">
+						<select class="custom-select" id="selHeightUnit">
 							<option>mm</option>
 							<option>cm</option>
 							<option selected="selected">m</option>
@@ -221,7 +232,7 @@
 							<option>yd</option>
 							<option>mi</option>
 						</select>
-					</span>
+					</div>
 				</div>
 			</div>
 		</div>
