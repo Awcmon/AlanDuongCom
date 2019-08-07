@@ -68,6 +68,7 @@
     <Content Include="Data\index.html" />
     <Content Include="Data\nav.html" />
     <Content Include="Data\navItem.html" />
+    <Content Include="Data\springysanic.html" />
     <Content Include="Data\supercruise.html" />
     <Content Include="Data\twotoner.html" />
     <Content Include="Data\wip.html" />
