@@ -60,6 +60,7 @@
   <ItemGroup>
     <Content Include="Data\alanduongcom.html" />
     <Content Include="Data\calculatorMilMoa.html" />
+    <Content Include="Data\dominocomputer.html" />
     <Content Include="Data\dropDownItem.html" />
     <Content Include="Data\dropUp.html" />
     <Content Include="Data\navItemActive.html" />
@@ -68,6 +69,7 @@
     <Content Include="Data\nav.html" />
     <Content Include="Data\navItem.html" />
     <Content Include="Data\supercruise.html" />
+    <Content Include="Data\twotoner.html" />
     <Content Include="Data\wip.html" />
     <Content Include="js\convertMilMoa_old.js" />
   </ItemGroup>

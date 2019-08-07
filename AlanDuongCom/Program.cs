@@ -20,8 +20,8 @@ namespace AlanDuongCom
 			Site site = new Site("alanduong.com", "basic.html");
 			site.AddPage("Index", "index.html", "");
 			site.AddPage("SUPERCRUISE", "supercruise.html", "Projects");
-			site.AddPage("TwoToner", "wip.html", "Projects");
-			site.AddPage("DominoComputer", "wip.html", "Projects");
+			site.AddPage("TwoToner", "twotoner.html", "Projects");
+			site.AddPage("DominoComputer", "dominocomputer.html", "Projects");
 			site.AddPage("alanduong.com", "alanduongcom.html", "Projects");
 			site.AddPage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AppendToProperty("#SCRIPTS#", Script("js/convertMilMoa.js"));
 			site.AddPage("Blog", "wip.html", "");
