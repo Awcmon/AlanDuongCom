@@ -2,11 +2,37 @@
 	<div class="row" ">
 		<div class="col-lg-12">
 			<h1>TwoToner</h1>
-			<p>This program recolorizes images to two colors, rescales the image to the resolution of the monitor, and applies smoothing to the edges of the image so that there are no sharp edges.</p>
+			<p>This program recolorizes images to two colors, rescales the image to the resolution of the monitor, and applies smoothing to the edges of the image so that there are no obtrusive edges.</p>
 
 			<p>I use this mostly for my personal desktop wallpapers. Some background images looked nice, but made it difficult to see desktop icons on. Additionally, I like multi-monitor setups and have a rotation of images, so I think it looks nicer if all my desktop backgrounds have a unified color scheme and style. Finally, I like the two-color, high-contrast art style.</p>
 
+			I wanted an art style resembling:<br />
+			<img src="content/img/christmas_carol_03.jpg" class="img-fluid" alt="Responsive image">
+			<br />
+			or
+			<br />
+			<img src="content/img/tracerbullet.png" class="img-fluid" alt="Responsive image">
+
+			<br /><br />
+
+			Simply recoloring the image results in:<br />
+			<img src="content/img/pziv_unsmoothed.png" class="img-fluid" alt="Responsive image">
+			It is very clear where the image ends, and it looks very ugly.
+
+			<br /><br />
+
+			With the edge smoothing applied:<br />
+			<img src="content/img/pziv_smoothed.png" class="img-fluid" alt="Responsive image">
+
+			<br />
+
+			The edge smoothing makes makes the letterboxing look far more natural. This is important because I did not want to stretch the image and ruin the proportions, nor did I want ugly letterboxing. Regarding the colors, I originally went with black and white, but it was too high-contrast and made it difficult to see desktop icons, so I changed both to what they are now.
+
+			<br /><br />
+
 			<p>Written in C++ using SDL2 and OpenGL.</p>
+
+
 
 		</div>
 	</div>
