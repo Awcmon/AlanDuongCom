@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlanDuongCom
 {
-	class Page : DataElement
+	class Page : DataElement //a page meant to be indexed by the navbar system
 	{
 		private List<NavItem> navItems;
 
