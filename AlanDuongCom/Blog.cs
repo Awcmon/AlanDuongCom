@@ -18,6 +18,7 @@ namespace AlanDuongCom
 
 			LoadBlogPosts(@"ProcessedBlogPosts\");
 
+			/*
 			foreach (BlogPost b in blogPosts)
 			{
 				foreach(string s in b.Content)
@@ -26,9 +27,21 @@ namespace AlanDuongCom
 				}
 				
 			}
+			*/
+
+
+
+			DataElement blogBody = new DataElement("blog.html");
+
+			foreach (BlogPost b in blogPosts)
+			{
+				blogBody.AppendToProperty("#POSTS#", GenerateBlogCard(b));
+			}
+
+			AppendToProperty("#CONTENT#", blogBody);
 		}
 
-		public void LoadBlogPosts(string dir)
+		private void LoadBlogPosts(string dir)
 		{
 			if(Directory.Exists(dir))
 			{
@@ -43,6 +56,21 @@ namespace AlanDuongCom
 			{
 
 			}
+		}
+
+		private DataElement GenerateBlogCard(BlogPost p)
+		{
+			DataElement ret = new DataElement("blogPostCard.html");
+
+			ret.AppendToProperty("#TITLE#", p.Title);
+			ret.AppendToProperty("#DATE#", p.Date.ToLongDateString());
+
+			foreach (string s in p.Content)
+			{
+				ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<p>{0}</p>", s)));
+			}
+
+			return ret;
 		}
 
 		public void ProcessBlogPosts(string srcDir, string outputDir)
