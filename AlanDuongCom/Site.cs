@@ -35,9 +35,33 @@ namespace AlanDuongCom
 
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);
+
+			AddPageToNav(title, navCategory);
 			
+			return page;
+		}
+
+		public Blog AddBlog(string title, string contentPath, string navCategory)
+		{
+			Blog page = new Blog(templatePath, title, navItems);
+
+			page.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + sitename)); //page title
+
+			DataElement pageContent = new DataElement(contentPath);
+			page.AppendToProperty("#CONTENT#", pageContent);
+
+			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
+			pages.Add(page);
+
+			AddPageToNav(title, navCategory);
+
+			return page;
+		}
+
+		private void AddPageToNav(string title, string navCategory)
+		{
 			//add an entry for this page to the list of NavItems.
-			if(navCategory == null) { return page; }
+			if (navCategory == null) { return; }
 			if (navCategory == "")
 			{
 				navItems.Add(new NavItem(title, SanitizeURL(title) + ".html"));
@@ -45,22 +69,21 @@ namespace AlanDuongCom
 			else
 			{
 				NavItem category = null;
-				foreach(NavItem i in navItems)
+				foreach (NavItem i in navItems)
 				{
-					if(i.title == navCategory) //if there already exists an item for that category
+					if (i.title == navCategory) //if there already exists an item for that category
 					{
 						category = i;
 						break;
 					}
 				}
-				if(category == null) //if the category does not exist yet, create it
+				if (category == null) //if the category does not exist yet, create it
 				{
 					category = new NavItem(navCategory, "#");
 					navItems.Add(category);
 				}
 				category.children.Add(new NavItem(title, SanitizeURL(title) + ".html"));
 			}
-			return page;
 		}
 
 		public Site(string sitename, string templatePath)

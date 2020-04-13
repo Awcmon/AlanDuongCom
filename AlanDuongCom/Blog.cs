@@ -14,7 +14,7 @@ namespace AlanDuongCom
 		public Blog(string templatePath, string id, List<NavItem> navItems) : base(templatePath, id, navItems)
 		{
 			blogPosts = new SortedSet<BlogPost>();
-			ProcessBlogPosts(@"Data/BlogPosts", @"Data/ProcessedBlogPosts");
+			ProcessBlogPosts(@"BlogPosts\", @"ProcessedBlogPosts\");
 		}
 
 		public void LoadBlogPosts(string dir)
@@ -36,10 +36,15 @@ namespace AlanDuongCom
 
 		public void ProcessBlogPosts(string srcDir, string outputDir)
 		{
-			if (!Directory.Exists(srcDir) || !Directory.Exists(outputDir))
+			if (!Directory.Exists(srcDir))
 			{
-				Console.WriteLine("Dir does not exist.");
+				Console.WriteLine("Src dir does not exist.");
 				return;
+			}
+
+			if(!Directory.Exists(outputDir))
+			{
+				Directory.CreateDirectory(outputDir);
 			}
 
 			string[] srcBlogPosts = Directory.GetFiles(srcDir);

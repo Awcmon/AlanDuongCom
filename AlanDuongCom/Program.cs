@@ -25,7 +25,7 @@ namespace AlanDuongCom
 			site.AddPage("Springy Sanic", "springysanic.html", "Projects");
 			site.AddPage("alanduong.com", "alanduongcom.html", "Projects");
 			site.AddPage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AppendToProperty("#SCRIPTS#", Script("js/convertMilMoa.js"));
-			site.AddPage("Blog", "wip.html", "");
+			site.AddBlog("Blog", "wip.html", "");
 			site.Generate();
 		}
 	}

@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog.cs" />
+    <Compile Include="BlogPost.cs" />
     <Compile Include="DataElement.cs" />
     <Compile Include="LiteralElement.cs" />
     <Compile Include="NavItem.cs" />
@@ -74,11 +76,12 @@
     <Content Include="Data\wip.html" />
     <Content Include="js\convertMilMoa_old.js" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist $(ProjectDir)$(OutDir)Data\ mkdir $(ProjectDir)$(OutDir)Data\
 if exist $(ProjectDir)$(OutDir)Data\ del /q $(ProjectDir)$(OutDir)Data\
-copy $(ProjectDir)Data\* $(ProjectDir)$(OutDir)Data\
+xcopy $(ProjectDir)Data\* /e $(ProjectDir)$(OutDir)Data\
 
 if not exist $(SolutionDir)js\ mkdir $(SolutionDir)js\
 if exist $(SolutionDir)js\ del /q $(SolutionDir)js\
