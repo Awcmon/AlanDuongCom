@@ -15,6 +15,17 @@ namespace AlanDuongCom
 		{
 			blogPosts = new SortedSet<BlogPost>();
 			ProcessBlogPosts(@"BlogPosts\", @"ProcessedBlogPosts\");
+
+			LoadBlogPosts(@"ProcessedBlogPosts\");
+
+			foreach (BlogPost b in blogPosts)
+			{
+				foreach(string s in b.Content)
+				{
+					AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<p>{0}</p>", s)));
+				}
+				
+			}
 		}
 
 		public void LoadBlogPosts(string dir)

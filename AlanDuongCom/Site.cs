@@ -47,9 +47,6 @@ namespace AlanDuongCom
 
 			page.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + sitename)); //page title
 
-			DataElement pageContent = new DataElement(contentPath);
-			page.AppendToProperty("#CONTENT#", pageContent);
-
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);
 

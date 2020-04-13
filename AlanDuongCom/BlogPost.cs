@@ -42,6 +42,7 @@ namespace AlanDuongCom
 			return true;
 		}
 
+		//sort by date then title
 		public int CompareTo(BlogPost other)
 		{
 			if(Date.CompareTo(other.Date) != 0)
