@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-//TODO: Add image embedding
-//TODO: Add markup for breaks and subheaders
+//RESOLVED: Add image embedding
+//TODO: Add markup for breaks, subheaders, lists, code blocks
+//TODO: Add better image embedding, like thumbnails etc for images that are too large
 
 namespace AlanDuongCom
 {

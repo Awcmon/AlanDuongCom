@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 //RESOLVED: Add BlogPost card truncation
+//TODO: Implement view blog posts by tags
 
 namespace AlanDuongCom
 {
@@ -65,6 +67,8 @@ namespace AlanDuongCom
 		{
 			DataElement ret = new DataElement("blogPostCard.html");
 
+			Regex isImage = new Regex(@"^[a-z0-9\$\-_\.\+\!\*\'\(\)\,\\\/:]*\.(png|jpg|jpeg|gif)$", RegexOptions.IgnoreCase);
+
 			ret.AppendToProperty("#TITLE#", p.Title);
 			ret.AppendToProperty("#DATE#", p.Date.ToLongDateString());
 
@@ -73,7 +77,14 @@ namespace AlanDuongCom
 			{
 				if(s != null && s != "")
 				{
-					ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<p>{0}</p>\n", s)));
+					if(isImage.IsMatch(s))
+					{
+						ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<img src=\"{0}\" class=\"img-fluid\" alt=\"{1}\">\n", s, s)));
+					}
+					else
+					{
+						ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<p>{0}</p>\n", s)));
+					}
 					curLines++;
 				}
 				if(lineLimit > 0 && curLines >= lineLimit)
