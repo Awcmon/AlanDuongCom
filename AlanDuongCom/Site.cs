@@ -5,12 +5,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+//TODO: make it possible to pin a blog post on the navbar?
+
 namespace AlanDuongCom
 {
 	class Site
 	{
 		private List<Page> pages;
 		public List<NavItem> NavItems { get; private set; }
+		public string RootDir { get; private set; }
 
 		public string Sitename { get; private set; }
 		public string TemplatePath { get; private set; }
@@ -22,50 +25,45 @@ namespace AlanDuongCom
 			return rgx.Replace(url.ToLower(), "-");
 		}
 
-		static public string GenerateURL(string pageName)
-		{
-			return SanitizeURL(pageName) + ".html";
-		}
-
 		//navCategory: "" to show on the navBar without a category, null to not show at all
 		//return the page that was added
-		public Page CreatePage(string title, string contentPath = null, string navCategory = null, string alternateTemplatePath = null)
+		public Page CreatePage(string title, string contentPath = null, string navCategory = null, string subDirectory = null, string alternateTemplatePath = null)
 		{
-			Page page = new Page(this, title, contentPath, alternateTemplatePath);
+			Page page = new Page(this, title, contentPath, subDirectory, alternateTemplatePath);
 
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);
 
 			if(navCategory != null)
 			{
-				AddPageToNav(title, navCategory);
+				AddPageToNav(title, page, navCategory);
 			}
 			
 			return page;
 		}
 
-		public Blog AddBlog(string title, string contentPath = null, string navCategory = null, string alternateTemplatePath = null)
+		public Blog AddBlog(string title, string contentPath = null, string navCategory = null, string subDirectory = null, string alternateTemplatePath = null)
 		{
-			Blog page = new Blog(this, title, contentPath, alternateTemplatePath);
+			Blog page = new Blog(this, title, contentPath, subDirectory, alternateTemplatePath);
 
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);
 
 			if (navCategory != null)
 			{
-				AddPageToNav(title, navCategory);
+				AddPageToNav(title, page, navCategory);
 			}
 
 			return page;
 		}
 
-		private void AddPageToNav(string title, string navCategory)
+		private void AddPageToNav(string title, Page page, string navCategory)
 		{
 			//add an entry for this page to the list of NavItems.
 			if (navCategory == null) { return; }
 			if (navCategory == "")
 			{
-				NavItems.Add(new NavItem(title, GenerateURL(title)));
+				NavItems.Add(new NavItem(title, page));
 			}
 			else
 			{
@@ -80,10 +78,10 @@ namespace AlanDuongCom
 				}
 				if (category == null) //if the category does not exist yet, create it
 				{
-					category = new NavItem(navCategory, "#");
+					category = new NavItem(navCategory, null);
 					NavItems.Add(category);
 				}
-				category.children.Add(new NavItem(title, GenerateURL(title)));
+				category.children.Add(new NavItem(title, page));
 			}
 		}
 
@@ -93,6 +91,7 @@ namespace AlanDuongCom
 			this.TemplatePath = templatePath;
 			NavItems = new List<NavItem>();
 			pages = new List<Page>();
+			RootDir = @"../../../";
 		}
 
 		//bake and write all the pages to the final html output
@@ -101,7 +100,7 @@ namespace AlanDuongCom
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(@"../../../" + GenerateURL(p.TemplateElement.Id), p.TemplateElement.Bake());
+				System.IO.File.WriteAllText(RootDir + p.GenerateURL(), p.TemplateElement.Bake());
 			}
 		}
 	}

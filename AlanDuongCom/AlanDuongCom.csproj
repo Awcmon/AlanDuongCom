@@ -64,6 +64,7 @@
     <Content Include="Data\blog.html" />
     <Content Include="Data\blogPostCard.html" />
     <Content Include="Data\calculatorMilMoa.html" />
+    <Content Include="Data\coloredURL.html" />
     <Content Include="Data\dominocomputer.html" />
     <Content Include="Data\dropDownItem.html" />
     <Content Include="Data\dropUp.html" />

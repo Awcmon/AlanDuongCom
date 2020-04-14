@@ -11,12 +11,12 @@ namespace AlanDuongCom
 	{
 		public List<NavItem> children;
 		public string title;
-		public string href;
+		public Page LinkedPage { get; private set; }
 
-		public NavItem(string title, string href)
+		public NavItem(string title, Page page)
 		{
 			this.title = title;
-			this.href = href;
+			LinkedPage = page;
 			children = new List<NavItem>();
 		}
 	}

@@ -15,7 +15,7 @@ namespace AlanDuongCom
 	{
 		SortedSet<BlogPost> blogPosts;
 
-		public Blog(Site site, string title, string contentPath = null, string altTemplatePath = null) : base(site, title, contentPath, altTemplatePath)
+		public Blog(Site site, string title, string contentPath = null, string subDirectory = null, string altTemplatePath = null) : base(site, title, contentPath, subDirectory, altTemplatePath)
 		{
 			blogPosts = new SortedSet<BlogPost>();
 			ProcessBlogPosts(@"BlogPosts\", @"ProcessedBlogPosts\");
@@ -33,15 +33,16 @@ namespace AlanDuongCom
 			}
 			*/
 
+			//Populate blog with blogpost cards and their respective pages
 			foreach (BlogPost b in blogPosts)
 			{
-				DataElement blogCard = GenerateBlogCard(b, 5);
-				blogCard.AppendToProperty("#URL#", Site.GenerateURL(b.Title));
-				ContentElement.AppendToProperty("#POSTS#", blogCard);
-
-				Page postPage = site.CreatePage(b.Title);
+				Page postPage = site.CreatePage(b.Title, null, null, "blog");
 				postPage.ContentElement = GenerateBlogCard(b);
-				postPage.ContentElement.AppendToProperty("#URL#", Site.GenerateURL(b.Title));
+				postPage.ContentElement.AppendToProperty("#URL#", postPage.GenerateRelativeURL(postPage));
+
+				DataElement blogCard = GenerateBlogCard(b, 5);
+				blogCard.AppendToProperty("#URL#", postPage.GenerateURL());
+				ContentElement.AppendToProperty("#POSTS#", blogCard);
 			}
 		}
 
@@ -89,7 +90,7 @@ namespace AlanDuongCom
 				}
 				if(lineLimit > 0 && curLines >= lineLimit)
 				{
-					ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<a href=\"{0}\"><font color=#FFFFFF>Continue reading</font></a>", Site.GenerateURL(p.Title))));
+					ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<a href=\"{0}\"><font color=#FFFFFF>Continue reading</font></a>", "#URL#")));
 					break;
 				}
 			}
