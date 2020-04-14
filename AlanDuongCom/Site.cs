@@ -16,10 +16,15 @@ namespace AlanDuongCom
 		public string TemplatePath { get; private set; }
 
 		//turn a string into only lowercase letters, numbers, and hyphens.
-		private string SanitizeURL(string url)
+		static public string SanitizeURL(string url)
 		{
 			Regex rgx = new Regex("[^a-zA-Z0-9-]");
 			return rgx.Replace(url.ToLower(), "-");
+		}
+
+		static public string GenerateURL(string pageName)
+		{
+			return SanitizeURL(pageName) + ".html";
 		}
 
 		//navCategory: "" to show on the navBar without a category, null to not show at all
@@ -60,7 +65,7 @@ namespace AlanDuongCom
 			if (navCategory == null) { return; }
 			if (navCategory == "")
 			{
-				NavItems.Add(new NavItem(title, SanitizeURL(title) + ".html"));
+				NavItems.Add(new NavItem(title, GenerateURL(title)));
 			}
 			else
 			{
@@ -78,7 +83,7 @@ namespace AlanDuongCom
 					category = new NavItem(navCategory, "#");
 					NavItems.Add(category);
 				}
-				category.children.Add(new NavItem(title, SanitizeURL(title) + ".html"));
+				category.children.Add(new NavItem(title, GenerateURL(title)));
 			}
 		}
 
@@ -96,7 +101,7 @@ namespace AlanDuongCom
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.TemplateElement.Id) + ".html", p.TemplateElement.Bake());
+				System.IO.File.WriteAllText(@"../../../" + GenerateURL(p.TemplateElement.Id), p.TemplateElement.Bake());
 			}
 		}
 	}

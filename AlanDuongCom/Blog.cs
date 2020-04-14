@@ -32,10 +32,12 @@ namespace AlanDuongCom
 			foreach (BlogPost b in blogPosts)
 			{
 				DataElement blogCard = GenerateBlogCard(b);
+				blogCard.AppendToProperty("#URL#", Site.GenerateURL(b.Title));
 				ContentElement.AppendToProperty("#POSTS#", blogCard);
 
 				Page postPage = site.CreatePage(b.Title);
 				postPage.ContentElement = GenerateBlogCard(b);
+				postPage.ContentElement.AppendToProperty("#URL#", Site.GenerateURL(b.Title));
 			}
 		}
 
