@@ -33,7 +33,7 @@ namespace AlanDuongCom
 
 			foreach (BlogPost b in blogPosts)
 			{
-				DataElement blogCard = GenerateBlogCard(b);
+				DataElement blogCard = GenerateBlogCard(b, 5);
 				blogCard.AppendToProperty("#URL#", Site.GenerateURL(b.Title));
 				ContentElement.AppendToProperty("#POSTS#", blogCard);
 
@@ -60,20 +60,27 @@ namespace AlanDuongCom
 			}
 		}
 
-		private DataElement GenerateBlogCard(BlogPost p)
+		//0 or negative number to have no limit
+		private DataElement GenerateBlogCard(BlogPost p, int lineLimit = -1)
 		{
 			DataElement ret = new DataElement("blogPostCard.html");
 
 			ret.AppendToProperty("#TITLE#", p.Title);
 			ret.AppendToProperty("#DATE#", p.Date.ToLongDateString());
 
+			int curLines = 0;
 			foreach (string s in p.Content)
 			{
 				if(s != null && s != "")
 				{
 					ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<p>{0}</p>\n", s)));
+					curLines++;
 				}
-				
+				if(lineLimit > 0 && curLines >= lineLimit)
+				{
+					ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<a href=\"{0}\"><font color=#FFFFFF>Continue reading</font></a>", Site.GenerateURL(p.Title))));
+					break;
+				}
 			}
 
 			return ret;
