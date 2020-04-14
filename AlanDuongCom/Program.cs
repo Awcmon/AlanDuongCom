@@ -17,7 +17,7 @@ namespace AlanDuongCom
 
 		static void Main(string[] args)
 		{
-			Site site = new Site("alanduong.com", "basic.html");
+			Site site = new Site("alanduong.com", "defaultTemplate.html");
 			site.CreatePage("Index", "index.html", "");
 			site.CreatePage("SUPERCRUISE", "supercruise.html", "Projects");
 			site.CreatePage("TwoToner", "twotoner.html", "Projects");

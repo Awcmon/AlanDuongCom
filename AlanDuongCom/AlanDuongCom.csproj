@@ -68,7 +68,7 @@
     <Content Include="Data\dropDownItem.html" />
     <Content Include="Data\dropUp.html" />
     <Content Include="Data\navItemActive.html" />
-    <Content Include="Data\basic.html" />
+    <Content Include="Data\defaultTemplate.html" />
     <Content Include="Data\index.html" />
     <Content Include="Data\nav.html" />
     <Content Include="Data\navItem.html" />
