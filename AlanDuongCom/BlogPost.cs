@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+//TODO: Add image embedding
+//TODO: Add markup for breaks and subheaders
+
 namespace AlanDuongCom
 {
 	class BlogPost : IComparable<BlogPost>
@@ -42,7 +45,7 @@ namespace AlanDuongCom
 			return true;
 		}
 
-		//sort by date then title
+		//sort by newest date to oldest date then title lexicographically if two posts have the same exact post time 
 		public int CompareTo(BlogPost other)
 		{
 			if(Date.CompareTo(other.Date) != 0)

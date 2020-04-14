@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 //TODO: Perhaps add STYLES property to page template?
 //TODO: Generate pages under subdirectories
+//TODO: Prettify final output HTML?
 
 namespace AlanDuongCom
 {

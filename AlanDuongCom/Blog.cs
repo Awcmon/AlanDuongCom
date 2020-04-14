@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO: Add BlogPost card truncation
+
 namespace AlanDuongCom
 {
 	class Blog : Page 
@@ -67,7 +69,11 @@ namespace AlanDuongCom
 
 			foreach (string s in p.Content)
 			{
-				ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<p>{0}</p>", s)));
+				if(s != null && s != "")
+				{
+					ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<p>{0}</p>\n", s)));
+				}
+				
 			}
 
 			return ret;
