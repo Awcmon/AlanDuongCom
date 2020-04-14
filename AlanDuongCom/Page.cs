@@ -8,6 +8,7 @@ namespace AlanDuongCom
 {
 	class Page
 	{
+		//a template page must have these properties: title, content scripts
 		public DataElement TemplateElement { get; protected set; }
 
 		private DataElement _contentElement;
@@ -44,6 +45,17 @@ namespace AlanDuongCom
 			{
 				ContentElement = new DataElement(contentPath);
 			}
+		}
+
+		//TODO: Replace this with a resource manager?
+		private string Script(string src)
+		{
+			return "<script src=\"" + src + "\"></script>";
+		}
+
+		public void AddScript(string scriptPath)
+		{
+			TemplateElement.AppendToProperty("#SCRIPTS#", Script(scriptPath));
 		}
 
 		//generate the navbar after all the pages are added to the site.

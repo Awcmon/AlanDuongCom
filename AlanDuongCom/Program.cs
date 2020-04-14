@@ -9,12 +9,6 @@ namespace AlanDuongCom
 {
 	class Program
 	{
-		//TODO: Replace this with a resource manager?
-		static string Script(string src)
-		{
-			return "<script src=\"" + src + "\"></script>";
-		}
-
 		static void Main(string[] args)
 		{
 			Site site = new Site("alanduong.com", "defaultTemplate.html");
@@ -24,7 +18,7 @@ namespace AlanDuongCom
 			site.CreatePage("DominoComputer", "dominocomputer.html", "Projects");
 			site.CreatePage("Springy Sanic", "springysanic.html", "Projects");
 			site.CreatePage("alanduong.com", "alanduongcom.html", "Projects");
-			//site.CreatePage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AppendToProperty("#SCRIPTS#", Script("js/convertMilMoa.js"));
+			site.CreatePage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AddScript("js/convertMilMoa.js");
 			site.AddBlog("Blog", "blog.html", "");
 			site.Generate();
 		}
