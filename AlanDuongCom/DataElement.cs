@@ -38,6 +38,15 @@ namespace AlanDuongCom
 			AppendToProperty(property, new LiteralElement(strLiteral));
 		}
 
+		public void ClearProperty(string property)
+		{
+			if (!properties.ContainsKey(property))
+			{
+				properties[property] = new List<DataElement>();
+			}
+			properties[property].Clear();
+		}
+
 		//turn this element and all its children into the final html
 		public virtual string Bake()
 		{

@@ -24,9 +24,9 @@ namespace AlanDuongCom
 
 		//navCategory: "" to show on the navBar without a category, null to not show at all
 		//return the page that was added
-		public Page CreatePage(string title, string contentPath, string navCategory = null, string alternateTemplatePath = null)
+		public Page CreatePage(string title, string contentPath = null, string navCategory = null, string alternateTemplatePath = null)
 		{
-			Page page = new Page(title, contentPath, this, alternateTemplatePath);
+			Page page = new Page(this, title, contentPath, alternateTemplatePath);
 
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);
@@ -39,9 +39,9 @@ namespace AlanDuongCom
 			return page;
 		}
 
-		public Blog AddBlog(string title, string contentPath, string navCategory = null, string alternateTemplatePath = null)
+		public Blog AddBlog(string title, string contentPath = null, string navCategory = null, string alternateTemplatePath = null)
 		{
-			Blog page = new Blog(title, contentPath, this, alternateTemplatePath);
+			Blog page = new Blog(this, title, contentPath, alternateTemplatePath);
 
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);

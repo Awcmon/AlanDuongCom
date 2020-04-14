@@ -9,19 +9,30 @@ namespace AlanDuongCom
 	class Page
 	{
 		public DataElement TemplateElement { get; protected set; }
-		public DataElement ContentElement { get; protected set; }
+
+		private DataElement _contentElement;
+		public DataElement ContentElement
+		{
+			get { return _contentElement; }
+			set
+			{
+				_contentElement = value;
+				TemplateElement.ClearProperty("#CONTENT#");
+				TemplateElement.AppendToProperty("#CONTENT#", value);
+			}
+		}
 
 		protected Site ParentSite { get; private set; } //the site this page belongs to
 
 		public string subDirectory;
 
-		public Page(string title, string contentPath, Site site, string templatePath = null)
+		public Page(Site site, string title, string contentPath = null, string altTemplatePath = null)
 		{
 			ParentSite = site;
 
-			if (templatePath != null)
+			if (altTemplatePath != null)
 			{
-				TemplateElement = new DataElement(templatePath, title);
+				TemplateElement = new DataElement(altTemplatePath, title);
 			}
 			else
 			{
@@ -29,9 +40,10 @@ namespace AlanDuongCom
 			}
 
 			TemplateElement.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + ParentSite.Sitename)); //page title
-
-			ContentElement = new DataElement(contentPath);
-			TemplateElement.AppendToProperty("#CONTENT#", ContentElement);
+			if(contentPath != null)
+			{
+				ContentElement = new DataElement(contentPath);
+			}
 		}
 
 		//generate the navbar after all the pages are added to the site.

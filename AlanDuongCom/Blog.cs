@@ -11,12 +11,12 @@ namespace AlanDuongCom
 	{
 		SortedSet<BlogPost> blogPosts;
 
-		public Blog(string title, string contentPath, Site site, string templatePath = null) : base(title, contentPath, site, templatePath)
+		public Blog(Site site, string title, string contentPath = null, string altTemplatePath = null) : base(site, title, contentPath, altTemplatePath)
 		{
 			blogPosts = new SortedSet<BlogPost>();
 			ProcessBlogPosts(@"BlogPosts\", @"ProcessedBlogPosts\");
 
-			LoadBlogPosts(@"ProcessedBlogPosts\");
+			LoadBlogPosts(@"ProcessedBlogPosts\", blogPosts);
 
 			/*
 			foreach (BlogPost b in blogPosts)
@@ -31,11 +31,15 @@ namespace AlanDuongCom
 
 			foreach (BlogPost b in blogPosts)
 			{
-				ContentElement.AppendToProperty("#POSTS#", GenerateBlogCard(b));
+				DataElement blogCard = GenerateBlogCard(b);
+				ContentElement.AppendToProperty("#POSTS#", blogCard);
+
+				Page postPage = site.CreatePage(b.Title);
+				postPage.ContentElement = GenerateBlogCard(b);
 			}
 		}
 
-		private void LoadBlogPosts(string dir)
+		private void LoadBlogPosts(string dir, SortedSet<BlogPost> dest)
 		{
 			if(Directory.Exists(dir))
 			{
@@ -43,7 +47,7 @@ namespace AlanDuongCom
 
 				foreach(string p in postPaths)
 				{
-					blogPosts.Add(new BlogPost(p));
+					dest.Add(new BlogPost(p));
 				}
 			}
 			else
