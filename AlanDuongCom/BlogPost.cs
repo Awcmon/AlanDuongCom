@@ -47,7 +47,7 @@ namespace AlanDuongCom
 		{
 			if(Date.CompareTo(other.Date) != 0)
 			{
-				return Date.CompareTo(other.Date);
+				return Date.CompareTo(other.Date) * -1;
 			}
 			else
 			{
