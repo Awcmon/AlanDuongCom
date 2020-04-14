@@ -29,16 +29,10 @@ namespace AlanDuongCom
 			}
 			*/
 
-
-
-			DataElement blogBody = new DataElement("blog.html");
-
 			foreach (BlogPost b in blogPosts)
 			{
-				blogBody.AppendToProperty("#POSTS#", GenerateBlogCard(b));
+				ContentElement.AppendToProperty("#POSTS#", GenerateBlogCard(b));
 			}
-
-			PageTemplate.AppendToProperty("#CONTENT#", blogBody);
 		}
 
 		private void LoadBlogPosts(string dir)

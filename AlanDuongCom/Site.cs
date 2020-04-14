@@ -10,7 +10,7 @@ namespace AlanDuongCom
 	class Site
 	{
 		private List<Page> pages;
-		public List<NavItem> navItems { get; private set; }
+		public List<NavItem> NavItems { get; private set; }
 
 		public string Sitename { get; private set; }
 		public string TemplatePath { get; private set; }
@@ -60,12 +60,12 @@ namespace AlanDuongCom
 			if (navCategory == null) { return; }
 			if (navCategory == "")
 			{
-				navItems.Add(new NavItem(title, SanitizeURL(title) + ".html"));
+				NavItems.Add(new NavItem(title, SanitizeURL(title) + ".html"));
 			}
 			else
 			{
 				NavItem category = null;
-				foreach (NavItem i in navItems)
+				foreach (NavItem i in NavItems)
 				{
 					if (i.title == navCategory) //if there already exists an item for that category
 					{
@@ -76,7 +76,7 @@ namespace AlanDuongCom
 				if (category == null) //if the category does not exist yet, create it
 				{
 					category = new NavItem(navCategory, "#");
-					navItems.Add(category);
+					NavItems.Add(category);
 				}
 				category.children.Add(new NavItem(title, SanitizeURL(title) + ".html"));
 			}
@@ -86,7 +86,7 @@ namespace AlanDuongCom
 		{
 			this.Sitename = sitename;
 			this.TemplatePath = templatePath;
-			navItems = new List<NavItem>();
+			NavItems = new List<NavItem>();
 			pages = new List<Page>();
 		}
 
@@ -96,7 +96,7 @@ namespace AlanDuongCom
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.PageTemplate.Id) + ".html", p.PageTemplate.Bake());
+				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.TemplateElement.Id) + ".html", p.TemplateElement.Bake());
 			}
 		}
 	}

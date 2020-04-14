@@ -8,28 +8,30 @@ namespace AlanDuongCom
 {
 	class Page
 	{
-		public DataElement PageTemplate { get; protected set; }
+		public DataElement TemplateElement { get; protected set; }
+		public DataElement ContentElement { get; protected set; }
 
-		private Site site; //the site this page belongs to
+		protected Site ParentSite { get; private set; } //the site this page belongs to
 
 		public string subDirectory;
 
 		public Page(string title, string contentPath, Site site, string templatePath = null)
 		{
-			if(templatePath != null)
+			ParentSite = site;
+
+			if (templatePath != null)
 			{
-				PageTemplate = new DataElement(templatePath, title);
+				TemplateElement = new DataElement(templatePath, title);
 			}
 			else
 			{
-				PageTemplate = new DataElement(site.TemplatePath, title);
+				TemplateElement = new DataElement(ParentSite.TemplatePath, title);
 			}
 
-			PageTemplate.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + site.Sitename)); //page title
+			TemplateElement.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + ParentSite.Sitename)); //page title
 
-			PageTemplate.AppendToProperty("#CONTENT#", new DataElement(contentPath));
-
-			this.site = site;
+			ContentElement = new DataElement(contentPath);
+			TemplateElement.AppendToProperty("#CONTENT#", ContentElement);
 		}
 
 		//generate the navbar after all the pages are added to the site.
@@ -39,10 +41,10 @@ namespace AlanDuongCom
 		public void GenerateNav()
 		{
 			DataElement output = new DataElement("nav.html"); //create the unpopulated navbar
-			foreach (NavItem i in site.navItems) //iterate through the navitems list populated when adding pages to the site
+			foreach (NavItem i in ParentSite.NavItems) //iterate through the navitems list populated when adding pages to the site
 			{
 				DataElement item; //the html element for a particular page or dropdown category
-				if (PageTemplate.Id == i.title)
+				if (TemplateElement.Id == i.title)
 				{
 					item = new DataElement("navItemActive.html"); 
 				}
@@ -65,7 +67,7 @@ namespace AlanDuongCom
 				item.AppendToProperty("#HREF#", new LiteralElement(i.href));
 				output.AppendToProperty("#CHILDREN#", item); //append the item to the navbar
 			}
-			PageTemplate.AppendToProperty("#NAV#", output); //bake the navbar DataElement into html to replace the #NAV# macro or property or whatever with.
+			TemplateElement.AppendToProperty("#NAV#", output); //bake the navbar DataElement into html to replace the #NAV# macro or property or whatever with.
 		}
 	}
 }
