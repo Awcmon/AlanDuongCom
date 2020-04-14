@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//TODO: Add BlogPost card truncation
+//RESOLVED: Add BlogPost card truncation
 
 namespace AlanDuongCom
 {
