@@ -138,15 +138,15 @@ namespace AlanDuongCom
 			}
 		}
 
-		public string GenerateURL(bool includeSubDirectory = true, bool isFilePath = false)
+		public string GenerateURL(bool includeSubDirectory = true)
 		{
 			if (SubDirectory == null || SubDirectory == "" || !includeSubDirectory)
 			{
-				return Site.SanitizeURL(Title) + (isFilePath ? ".html" : "");
+				return Site.SanitizeURL(Title) + ".html";
 			}
 			else
 			{
-				return Site.SanitizeURL(SubDirectory) + "/" + Site.SanitizeURL(Title) + (isFilePath ? ".html" : "");
+				return Site.SanitizeURL(SubDirectory) + "/" + Site.SanitizeURL(Title) + ".html";
 			}
 		}
 	}

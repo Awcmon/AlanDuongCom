@@ -36,7 +36,7 @@ namespace AlanDuongCom
 			//Populate blog with blogpost cards and their respective pages
 			foreach (BlogPost b in blogPosts)
 			{
-				Page postPage = site.CreatePage(b.Title, null, null, "blog-posts");
+				Page postPage = site.CreatePage(b.Title, null, null, "blog");
 				postPage.ContentElement = GenerateBlogCard(b);
 				postPage.ContentElement.AppendToProperty("#URL#", postPage.GenerateRelativeURL(postPage));
 

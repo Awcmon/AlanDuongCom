@@ -100,7 +100,7 @@ namespace AlanDuongCom
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(RootDir + p.GenerateURL(true, true), p.TemplateElement.Bake());
+				System.IO.File.WriteAllText(RootDir + p.GenerateURL(), p.TemplateElement.Bake());
 			}
 		}
 	}
