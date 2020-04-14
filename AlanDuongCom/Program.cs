@@ -18,14 +18,14 @@ namespace AlanDuongCom
 		static void Main(string[] args)
 		{
 			Site site = new Site("alanduong.com", "basic.html");
-			site.AddPage("Index", "index.html", "");
-			site.AddPage("SUPERCRUISE", "supercruise.html", "Projects");
-			site.AddPage("TwoToner", "twotoner.html", "Projects");
-			site.AddPage("DominoComputer", "dominocomputer.html", "Projects");
-			site.AddPage("Springy Sanic", "springysanic.html", "Projects");
-			site.AddPage("alanduong.com", "alanduongcom.html", "Projects");
-			site.AddPage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AppendToProperty("#SCRIPTS#", Script("js/convertMilMoa.js"));
-			site.AddBlog("Blog", "wip.html", "");
+			site.CreatePage("Index", "index.html", "");
+			site.CreatePage("SUPERCRUISE", "supercruise.html", "Projects");
+			site.CreatePage("TwoToner", "twotoner.html", "Projects");
+			site.CreatePage("DominoComputer", "dominocomputer.html", "Projects");
+			site.CreatePage("Springy Sanic", "springysanic.html", "Projects");
+			site.CreatePage("alanduong.com", "alanduongcom.html", "Projects");
+			//site.CreatePage("MIL/MOA Calculator", "calculatorMilMoa.html", "Tools").AppendToProperty("#SCRIPTS#", Script("js/convertMilMoa.js"));
+			site.AddBlog("Blog", "blog.html", "");
 			site.Generate();
 		}
 	}

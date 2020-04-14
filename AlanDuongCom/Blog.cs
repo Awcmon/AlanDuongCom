@@ -11,7 +11,7 @@ namespace AlanDuongCom
 	{
 		SortedSet<BlogPost> blogPosts;
 
-		public Blog(string templatePath, string id, List<NavItem> navItems) : base(templatePath, id, navItems)
+		public Blog(string title, string contentPath, Site site, string templatePath = null) : base(title, contentPath, site, templatePath)
 		{
 			blogPosts = new SortedSet<BlogPost>();
 			ProcessBlogPosts(@"BlogPosts\", @"ProcessedBlogPosts\");
@@ -38,7 +38,7 @@ namespace AlanDuongCom
 				blogBody.AppendToProperty("#POSTS#", GenerateBlogCard(b));
 			}
 
-			AppendToProperty("#CONTENT#", blogBody);
+			PageTemplate.AppendToProperty("#CONTENT#", blogBody);
 		}
 
 		private void LoadBlogPosts(string dir)
@@ -54,7 +54,7 @@ namespace AlanDuongCom
 			}
 			else
 			{
-
+				Console.WriteLine("Blog Post load dir not found");
 			}
 		}
 

@@ -6,13 +6,30 @@ using System.Threading.Tasks;
 
 namespace AlanDuongCom
 {
-	class Page : DataElement //a data element meant to be indexed by the navbar system
+	class Page
 	{
-		private List<NavItem> navItems;
+		public DataElement PageTemplate { get; protected set; }
 
-		public Page(string templatePath, string id, List<NavItem> navItems) : base(templatePath, id)
+		private Site site; //the site this page belongs to
+
+		public string subDirectory;
+
+		public Page(string title, string contentPath, Site site, string templatePath = null)
 		{
-			this.navItems = navItems;
+			if(templatePath != null)
+			{
+				PageTemplate = new DataElement(templatePath, title);
+			}
+			else
+			{
+				PageTemplate = new DataElement(site.TemplatePath, title);
+			}
+
+			PageTemplate.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + site.Sitename)); //page title
+
+			PageTemplate.AppendToProperty("#CONTENT#", new DataElement(contentPath));
+
+			this.site = site;
 		}
 
 		//generate the navbar after all the pages are added to the site.
@@ -22,10 +39,10 @@ namespace AlanDuongCom
 		public void GenerateNav()
 		{
 			DataElement output = new DataElement("nav.html"); //create the unpopulated navbar
-			foreach (NavItem i in navItems) //iterate through the navitems list populated when adding pages to the site
+			foreach (NavItem i in site.navItems) //iterate through the navitems list populated when adding pages to the site
 			{
 				DataElement item; //the html element for a particular page or dropdown category
-				if (Id == i.title)
+				if (PageTemplate.Id == i.title)
 				{
 					item = new DataElement("navItemActive.html"); 
 				}
@@ -48,7 +65,7 @@ namespace AlanDuongCom
 				item.AppendToProperty("#HREF#", new LiteralElement(i.href));
 				output.AppendToProperty("#CHILDREN#", item); //append the item to the navbar
 			}
-			AppendToProperty("#NAV#", output); //bake the navbar DataElement into html to replace the #NAV# macro or property or whatever with.
+			PageTemplate.AppendToProperty("#NAV#", output); //bake the navbar DataElement into html to replace the #NAV# macro or property or whatever with.
 		}
 	}
 }

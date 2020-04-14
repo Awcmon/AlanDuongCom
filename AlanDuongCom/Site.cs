@@ -10,10 +10,10 @@ namespace AlanDuongCom
 	class Site
 	{
 		private List<Page> pages;
-		private List<NavItem> navItems;
+		public List<NavItem> navItems { get; private set; }
 
-		private string sitename;
-		private string templatePath;
+		public string Sitename { get; private set; }
+		public string TemplatePath { get; private set; }
 
 		//turn a string into only lowercase letters, numbers, and hyphens.
 		private string SanitizeURL(string url)
@@ -24,33 +24,32 @@ namespace AlanDuongCom
 
 		//navCategory: "" to show on the navBar without a category, null to not show at all
 		//return the page that was added
-		public Page AddPage(string title, string contentPath, string navCategory)
+		public Page CreatePage(string title, string contentPath, string navCategory = null, string alternateTemplatePath = null)
 		{
-			Page page = new Page(templatePath, title, navItems);
-
-			page.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + sitename)); //page title
-
-			DataElement pageContent = new DataElement(contentPath);
-			page.AppendToProperty("#CONTENT#", pageContent);
+			Page page = new Page(title, contentPath, this, alternateTemplatePath);
 
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);
 
-			AddPageToNav(title, navCategory);
+			if(navCategory != null)
+			{
+				AddPageToNav(title, navCategory);
+			}
 			
 			return page;
 		}
 
-		public Blog AddBlog(string title, string contentPath, string navCategory)
+		public Blog AddBlog(string title, string contentPath, string navCategory = null, string alternateTemplatePath = null)
 		{
-			Blog page = new Blog(templatePath, title, navItems);
-
-			page.AppendToProperty("#TITLE#", new LiteralElement(title + " - " + sitename)); //page title
+			Blog page = new Blog(title, contentPath, this, alternateTemplatePath);
 
 			//pages.Add(new Page(title, contentPath, sitename, templatePath, navItems));
 			pages.Add(page);
 
-			AddPageToNav(title, navCategory);
+			if (navCategory != null)
+			{
+				AddPageToNav(title, navCategory);
+			}
 
 			return page;
 		}
@@ -85,8 +84,8 @@ namespace AlanDuongCom
 
 		public Site(string sitename, string templatePath)
 		{
-			this.sitename = sitename;
-			this.templatePath = templatePath;
+			this.Sitename = sitename;
+			this.TemplatePath = templatePath;
 			navItems = new List<NavItem>();
 			pages = new List<Page>();
 		}
@@ -97,7 +96,7 @@ namespace AlanDuongCom
 			foreach (Page p in pages)
 			{
 				p.GenerateNav();
-				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.Id) + ".html", p.Bake());
+				System.IO.File.WriteAllText(@"../../../" + SanitizeURL(p.PageTemplate.Id) + ".html", p.PageTemplate.Bake());
 			}
 		}
 	}
