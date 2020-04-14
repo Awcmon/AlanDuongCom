@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO: Perhaps add STYLES property to page template?
+//TODO: Generate pages under subdirectories
+
 namespace AlanDuongCom
 {
 	class Page
