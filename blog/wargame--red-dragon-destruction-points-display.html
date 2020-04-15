@@ -117,7 +117,7 @@
 <p>We know the data is there-- we just have to find it. Even if the variable is dynamically allocated, pretty much everything can be traced back to a statically allocated piece of data. Eventually.</p>
 <p>Some vocabulary for those with less familiarity with software:</p>
 <ul>	<li>pointer: A variable whose value is a memory address of another variable (even another pointer)</li>	<li>struct: A composite data type where multiple variables are grouped together in a contiguous block of memory. Each variable has a unchanging offset in memory from the base address of the struct.</li>	<li>address: A specific location in memory. </li>	<li>memory: Thing that contains data. </li>	<li>esi, eax, ecx, etc: Different registers. Registers hold data temporarily.</li>	<li>0x prefix is used to designate a hexadecimal number.</li></ul><h3>Cheat Engine</h3><p>The first order of business is to find the location in memory of the relevant variables. Personally, I've always avoided using Cheat Engine because it has a reputation for being used by script kiddies. However, it's perfectly suited to finding the location in memory of variables, unsurprisingly. As far as I'm concerned, there's no point to reinventing the wheel when the wheel is perfectly suitable.</p>
-<h3>Locating the variable</h3><p>So we've got the game running, a replay loaded (thrill-seekers can also do this during a live game for added excitement), and Cheat Engine (henceforth referred to as CE) or whatever running and attached to the game.</p>
+<h3>Locating the variable</h3><p>So we've got the game running, a replay loaded, and Cheat Engine (henceforth referred to as CE) or whatever running and attached to the game.</p>
 <p>We don't exactly know what type of data the "kills" variable is. However, since it always shows up as a positive integer at the end of the game, it can be assumed that it's an integer. It's also unlikely that the developers would try to save 3 bytes worth of memory, so it's likely that it's a 32-bit integer. Also, this is also a 32-bit game, so the pointers should also be 32-bit.</p>
 <p>It is likely that the kills variable starts at 0, because nobody has gotten a kill yet. However, scanning for 0's takes forever since there is probably a ton of 0's in memory. So we wait until the first kill.</p>
 <img src="https://i.imgur.com/IsricSx.png" class="img-fluid" alt="https://i.imgur.com/IsricSx.png">
@@ -141,8 +141,8 @@
 <hr><img src="https://i.imgur.com/YuCSK18.png" class="img-fluid" alt="https://i.imgur.com/YuCSK18.png">
 <p>Once again, we monitor that memory location to see what instruction writes to it.</p>
 <hr><img src="https://i.imgur.com/tSLHGfH.png" class="img-fluid" alt="https://i.imgur.com/tSLHGfH.png">
-<p>This one only gets written to after the game ends. We only care about the first instruction because that memory address can be used for pretty much anything after that. The thing is, we actually don't care about the base address of this struct. The game has ended, so now it's meaningless. However, now we know its offset, which is +0x134.</p>
-<p>Let's start another game.</p>
+<p>This one only gets written to after the replay ends. We only care about the first instruction because that memory address can be used for pretty much anything after that. The thing is, we actually don't care about the base address of this struct. The replay has ended, so now it's meaningless. However, now we know its offset, which is +0x134.</p>
+<p>Let's start another replay.</p>
 <hr><img src="https://i.imgur.com/w6x82Of.png" class="img-fluid" alt="https://i.imgur.com/w6x82Of.png">
 <p>Do the same stuff as before to find the new memory address for the kills variable. We chose the variable that had an address ending in 0 last time, so choose the one ending in 0 again. We can speed things up a bit because now we know the offsets. The base address of this struct is the address of the variable minus 0x30, or 0x354EB1B0.</p>
 <hr><img src="https://i.imgur.com/y20XmnN.png" class="img-fluid" alt="https://i.imgur.com/y20XmnN.png">
@@ -150,7 +150,7 @@
 <hr><h3>Locating the pointer to the pointer to the pointer to the variable</h3><p>It might feel like a cruel joke, but the truth is we still have to go deeper. The address we just found will still change the next replay, not to mention the next time the game is launched.</p>
 <img src="https://i.imgur.com/zgkAEYw.png" class="img-fluid" alt="https://i.imgur.com/zgkAEYw.png">
 <p>Scan for that base address we just found. There is a very large amount of entries. We have to narrow it down somehow. This is where things get a little tricky. The goal is to try to find a variable that reliably points to the struct that contains the struct that contains the struct that has the variable we want. </p>
-<p>Open up a new scan tab (very important) and a new game (also very important).</p>
+<p>Open up a new scan tab (very important) and a new replay (also very important).</p>
 <hr><img src="https://i.imgur.com/S4AROB3.png" class="img-fluid" alt="https://i.imgur.com/S4AROB3.png">
 <p>Find the kills variable once again. Again, we use the one ending with a zero because that's what we used in the first place. It has an offset of +0x30, so the base address of its struct is 0x5F184B40 this time.</p>
 <hr><img src="https://i.imgur.com/g2mkoKq.png" class="img-fluid" alt="https://i.imgur.com/g2mkoKq.png">
@@ -175,12 +175,12 @@
 <p>It's finally over. If we copy the address by right-clicking on it, we will actually get:</p>
 <pre><code style="background-color:#262626;color:#FFFFFF">wargame3.exe+1D1FE0C</code></pre> <p>That is the base address of our game and the offset of this pointer relative to that address. Any time the game starts, no matter where it starts, this variable will always be located at the same offset. </p>
 <hr><img src="https://i.imgur.com/7jRMhnd.png" class="img-fluid" alt="https://i.imgur.com/7jRMhnd.png">
-<p>In CE, we can trace our path. It looks like this. This is yet another replay or game, so the addresses have changed, but we are able to end up at the kills variable.</p>
+<p>In CE, we can trace our path. It looks like this. This is yet another replay, so the addresses have changed, but we are able to end up at the kills variable.</p>
 <hr><img src="https://i.imgur.com/dUH1tFx.png" class="img-fluid" alt="https://i.imgur.com/dUH1tFx.png">
-<p>Another game might look like this.</p>
+<p>Another replay might look like this.</p>
 <hr><p>Even if we close the game and start it again, because we found everything relative to the process base address, everything will still function.</p>
 <p>The last step is to write a program that reads from process memory. Code for such can be found <a href="https://github.com/Awcmon/WGRDShowDestructionPoints/blob/master/WGRDShowDestructionPoints/Program.cs">here</a>. It is a fairly straightforward program. Access the process memory, go through the memory locations we found, and then read and display our kills variable.</p>
-<p>This goes to show that even a fairly simple task can be pretty fairly when applied to a "real" piece of software. </p>
+<p>This goes to show that even a fairly simple task can be pretty tedious when applied to a "real" piece of software. </p>
 
 
 </div><!-- /.blog-post -->
