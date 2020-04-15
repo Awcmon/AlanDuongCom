@@ -130,11 +130,11 @@
 <p>A Panzerfaust 3 from the Korean Marines finishes off the last M1A1 Abrams. Now we should have 235 points in terms of player 2 kills.</p>
 <hr><img src="https://i.imgur.com/cavkhcR.png" class="img-fluid" alt="https://i.imgur.com/cavkhcR.png">
 <p>Scan for 235 and we now have 2 variables. One is player 2 kills and the other is player 1 deaths. We can find out exactly which one is which if there's a case of friendly fire, but honestly no matter which one is chosen, it'll probably be good enough. Since we found the variable we're interested in, we can stop closely watching for kills.</p>
-<hr><h3>Locating the pointer to the variable</h3><p>The problem is that the variable is not statically allocated. That is, it may appear anywhere in the space of memory that our game is allocated. So next replay or game, it can and will be at an entirely different memory location. As I said before, all things can be traced back to a static offset from the process' base address so we will have to do just that.</p>
+<hr><h3>Locating the pointer to the variable</h3><p>The problem is that the variable is not statically allocated. That is, it may appear anywhere in the block of memory that our game is allocated. So next replay or game, it can and will be at an entirely different memory location. As I said before, all things can be traced back to a static offset from the process' base address so we will have to do just that.</p>
 <img src="https://i.imgur.com/8kjbiCZ.png" class="img-fluid" alt="https://i.imgur.com/8kjbiCZ.png">
 <p>We now want to monitor what instructions write to that address. CE can do this. Attach the debugger and wait until player 2 gets more kills.</p>
 <hr><img src="https://i.imgur.com/jdXMuoU.png" class="img-fluid" alt="https://i.imgur.com/jdXMuoU.png">
-<p>There we go. There's an instruction that adds stuff to the variable located at esi+30, which is our variable. The address of our variable is 0x38F9D210, which is equal to esi + 0x30. In other words, +0x30 is our offset and esi is our base address. Through either basic math or just clicking on the instruction to find what esi was at the moment of time the instruction was executed, we will find that the base address of the struct that contains our kills variable is 0x38F9D1E0.</p>
+<p>There we go. There's an instruction that adds stuff to the variable located at esi + 0x30, which is our variable. The address of our variable is 0x38F9D210, which is equal to esi + 0x30. In other words, +0x30 is our offset and esi is our base address. Through either basic math or just clicking on the instruction to find what esi was at the moment of time the instruction was executed, we will find that the base address of the struct that contains our kills variable is 0x38F9D1E0.</p>
 <hr><h3>Locating the pointer to the pointer to the variable</h3><p>The address we found still isn't statically allocated. It will change the next replay or the next time the game is launched. We have to go deeper.</p>
 <img src="https://i.imgur.com/kTOTPnC.png" class="img-fluid" alt="https://i.imgur.com/kTOTPnC.png">
 <p>Scan for that base address and we will find a single result. Nice. This is the variable that holds the base address to our struct and now we want to find the base address of the struct of this variable.</p>
@@ -167,12 +167,13 @@
 <p>Once we leave the replay, we get these. Let's just stick with the first one, and if that doesn't work, we can try the second.</p>
 <hr><img src="https://i.imgur.com/qAYD2z8.png" class="img-fluid" alt="https://i.imgur.com/qAYD2z8.png">
 <p>We have a base address of eax (0x356F9E40) and an offset of ecx*0x4, or 0x14, as this is hexadecimal.</p>
-<p>Also, that list on the bottom is what I meant earlier by "clicking on the instruction" and just copying the value of esi (not shown in the picture unfortunately).</p>
+<p>Also, that list on the bottom is what I meant earlier by "clicking on the instruction" and just copying the value of esi.</p>
 <hr><h3>Locating the pointer to the pointer to the pointer to the pointer to the variable</h3><p>Is it finally over? Yes, almost.</p>
 <img src="https://i.imgur.com/JdMLOhk.png" class="img-fluid" alt="https://i.imgur.com/JdMLOhk.png">
 <p>We search for the base address we found just now and get this. </p>
 <p>This time the address is green. If you were wondering, "how do we know when to stop?", well then, this is how. If you tried to stop prior to this, you would only experience disappointment or frustration as you find that the addresses of everything you found changed and you must find them again.</p>
-<p>It's finally over. If we copy the address by right-clicking on it, we will actually get <pre><code>wargame3.exe+1D1FE0C</code></pre>. That is the base address of our game and the offset of this pointer relative to that address. Any time the game starts, no matter where it starts, this variable will always be located at the same offset. </p>
+<p>It's finally over. If we copy the address by right-clicking on it, we will actually get:</p>
+<pre><code style="background-color:#262626;color:#FFFFFF">wargame3.exe+1D1FE0C</code></pre> <p>That is the base address of our game and the offset of this pointer relative to that address. Any time the game starts, no matter where it starts, this variable will always be located at the same offset. </p>
 <hr><img src="https://i.imgur.com/7jRMhnd.png" class="img-fluid" alt="https://i.imgur.com/7jRMhnd.png">
 <p>In CE, we can trace our path. It looks like this. This is yet another replay or game, so the addresses have changed, but we are able to end up at the kills variable.</p>
 <hr><img src="https://i.imgur.com/dUH1tFx.png" class="img-fluid" alt="https://i.imgur.com/dUH1tFx.png">
