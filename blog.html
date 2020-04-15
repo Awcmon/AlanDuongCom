@@ -62,7 +62,7 @@
 
 </head>
 
-<body style="background-color:#262626;color:#BFBFBF">
+<body style="background-color:#262626;color:#DFDFDF">
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -122,9 +122,9 @@
 
 	<p>In this Real-Time Strategy game there is a gamemode called Conquest where the player captures sectors and accumulates victory points. Whoever reaches the limit first or has the most at the end of the game wins. </p>
 <p>The thing with this gamemode is that it does not show players how many points worth of enemy units they have killed. Maybe that's fair during a game, but it would be interesting to see during a replay.</p>
-<p>This post will be about how I created that <a href=https://github.com/Awcmon/WGRDShowDestructionPoints/tree/master/WGRDShowDestructionPoints>tool</a>, for those who may be interested. Experts in reverse engineering will probably be bored or have a lot of things to nitpick about, so this is more geared towards those who are vaguely familiar with the internal workings of software and want to see how something like this is made. </p>
+<p>This post will be about how I created <a href=https://github.com/Awcmon/WGRDShowDestructionPoints/tree/master/WGRDShowDestructionPoints>this tool</a>, for those who may be interested. Experts in reverse engineering will probably be bored or have a lot of things to nitpick about, so this is more geared towards those who are vaguely familiar with the internal workings of software and want to see how something like this is made. Or something.</p>
 <p>The general gist of it is to find the location in memory where the variable that tallies up kills is stored, then make a program that reads the relevant data from that place in memory. This is a fairly simple task, but on a real piece of software, so some may find it interesting.</p>
-<p>We know the data is there-- we just have to find it. Even if the variable is dynamically allocated, pretty much everything can be traced back to a statically allocated piece of data.</p>
+<p>We know the data is there-- we just have to find it. Even if the variable is dynamically allocated, pretty much everything can be traced back to a statically allocated piece of data. Eventually.</p>
 <a href="blog/wargame--red-dragon-destruction-points-display.html"><font color=#FFFFFF>Continue reading</font></a>
 
 </div><!-- /.blog-post -->

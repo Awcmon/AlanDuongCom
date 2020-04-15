@@ -69,6 +69,7 @@ namespace AlanDuongCom
 			DataElement ret = new DataElement("blogPostCard.html");
 
 			Regex isImage = new Regex(@"^[a-z0-9\$\-_\.\+\!\*\'\(\)\,\\\/:]*\.(png|jpg|jpeg|gif)$", RegexOptions.IgnoreCase);
+			Regex isElement = new Regex(@"^[ \t]*<.*", RegexOptions.IgnoreCase);
 
 			ret.AppendToProperty("#TITLE#", p.Title);
 			ret.AppendToProperty("#DATE#", p.Date.ToLongDateString());
@@ -81,6 +82,10 @@ namespace AlanDuongCom
 					if(isImage.IsMatch(s))
 					{
 						ret.AppendToProperty("#CONTENT#", new LiteralElement(String.Format("<img src=\"{0}\" class=\"img-fluid\" alt=\"{1}\">\n", s, s)));
+					}
+					else if(isElement.IsMatch(s))
+					{
+						ret.AppendToProperty("#CONTENT#", new LiteralElement(s));
 					}
 					else
 					{
