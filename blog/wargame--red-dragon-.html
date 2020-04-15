@@ -8,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Blog - alanduong.com</title>
+	<title>Wargame: Red Dragon  - alanduong.com</title>
 
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -74,31 +74,28 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-	<a class="nav-link" href="index.html">Index</a>
+	<a class="nav-link" href="../index.html">Index</a>
 </li>
 <li class="nav-item dropdown">
 	<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</a>
 	<div class="dropdown-menu" aria-labelledby="dropdown01">
-		<a class="dropdown-item" href="supercruise.html">SUPERCRUISE</a>
-<a class="dropdown-item" href="twotoner.html">TwoToner</a>
-<a class="dropdown-item" href="dominocomputer.html">DominoComputer</a>
-<a class="dropdown-item" href="springy-sanic.html">Springy Sanic</a>
-<a class="dropdown-item" href="alanduong-com.html">alanduong.com</a>
+		<a class="dropdown-item" href="../supercruise.html">SUPERCRUISE</a>
+<a class="dropdown-item" href="../twotoner.html">TwoToner</a>
+<a class="dropdown-item" href="../dominocomputer.html">DominoComputer</a>
+<a class="dropdown-item" href="../springy-sanic.html">Springy Sanic</a>
+<a class="dropdown-item" href="../alanduong-com.html">alanduong.com</a>
 
 	</div>
 </li>
 <li class="nav-item dropdown">
 	<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
 	<div class="dropdown-menu" aria-labelledby="dropdown01">
-		<a class="dropdown-item" href="mil-moa-calculator.html">MIL/MOA Calculator</a>
+		<a class="dropdown-item" href="../mil-moa-calculator.html">MIL/MOA Calculator</a>
 
 	</div>
 </li>
-<li class="nav-item active">
-	<a class="nav-link" href="blog.html">
-		Blog
-		<span class="sr-only">(current)</span>
-	</a>
+<li class="nav-item">
+	<a class="nav-link" href="../blog.html">Blog</a>
 </li>
 
 			</ul>
@@ -109,32 +106,17 @@
 
 	<!-- Page Content -->
 	<main role="main" class="container">
-		<main role="main" class="container">
-	<div class="row">
-		<div class="col-md-12 blog-main">
-			<h3 class="pb-3 mb-4 font-italic border-bottom">
-				Personal blog mainly about computer-related things.
-			</h3>
+		<div class="blog-post">
+	<h2 class="blog-post-title"><a href="wargame--red-dragon-.html"><font color=#FFFFFF>Wargame: Red Dragon </font></a></h2>
+	<p class="blog-post-meta">Tuesday, April 14, 2020</p>
 
-			<div class="blog-post">
-	<h2 class="blog-post-title"><a href="blog/wargame--red-dragon-destruction-points-display.html"><font color=#FFFFFF>Wargame: Red Dragon Destruction Points Display</font></a></h2>
-	<p class="blog-post-meta">Wednesday, April 15, 2020</p>
-
-	<p>In this Real-Time Strategy game there is a gamemode called Conquest where the player captures sectors and accumulates victory points. Whoever reaches the limit first or has the most at the end of the game wins. </p>
+	<p>In this RTS game, there is a gamemode called Conquest, where you capture sectors and accumulate victory points. Whoever reaches the limit first or has the most at the end of the game wins. </p>
 <p>The thing with this gamemode is that it does not show players how many points worth of enemy units they have killed. Maybe that's fair during a game, but it would be interesting to see during a replay.</p>
-<p>This post will be about how I created that <a href=https://github.com/Awcmon/WGRDShowDestructionPoints/tree/master/WGRDShowDestructionPoints>tool</a>, for those who may be interested. Experts in reverse engineering will probably be bored or have a lot of things to nitpick about, so this is more geared towards those who are vaguely familiar with the internal workings of software and want to see how something like this is made. </p>
-<p>The general gist of it is to find the location in memory where the variable that tallies up kills is stored, then make a program that reads the relevant data from that place in memory. This is a fairly simple task, but on a real piece of software, so some may find it interesting.</p>
-<p>We know the data is there-- we just have to find it. Even if the variable is dynamically allocated, pretty much everything can be traced back to a statically allocated piece of data.</p>
-<a href="blog/wargame--red-dragon-destruction-points-display.html"><font color=#FFFFFF>Continue reading</font></a>
+<p>This post will be about how I created that <a href=https://github.com/Awcmon/WGRDShowDestructionPoints/tree/master/WGRDShowDestructionPoints>tool</a>, for the few people that might be interested. </p>
+<p>The general gist of it is to find the location in memory where the variable that tallies up kills is stored, then make a program that reads the relevant data from that place in memory.</p>
+
 
 </div><!-- /.blog-post -->
-
-
-		</div><!-- /.blog-main -->
-
-	</div><!-- /.row -->
-
-</main><!-- /.container -->
 
 	</main>
 

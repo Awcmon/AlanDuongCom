@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Wargame: Red Dragon Destruction Points Display - alanduong.com</title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+
+		input[type="number"]:disabled {
+			background: #CFAFAF;
+		}
+
+		/* Show it is fixed to the top */
+		body {
+			padding-top: 4.5rem;
+		}
+
+		hr {
+			color: #BFBFBF;
+			background-color: #BFBFBF;
+		}
+
+		.blog-post {
+			margin-bottom: 4rem;
+		}
+
+		.blog-post-title {
+			margin-bottom: .25rem;
+			font-size: 2.5rem;
+		}
+
+		.blog-post-meta {
+			margin-bottom: 1.25rem;
+			color: #999;
+		}
+	</style>
+
+	
+
+</head>
+
+<body style="background-color:#262626;color:#BFBFBF">
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="index.html">Alan Duong</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+	<a class="nav-link" href="../index.html">Index</a>
+</li>
+<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</a>
+	<div class="dropdown-menu" aria-labelledby="dropdown01">
+		<a class="dropdown-item" href="../supercruise.html">SUPERCRUISE</a>
+<a class="dropdown-item" href="../twotoner.html">TwoToner</a>
+<a class="dropdown-item" href="../dominocomputer.html">DominoComputer</a>
+<a class="dropdown-item" href="../springy-sanic.html">Springy Sanic</a>
+<a class="dropdown-item" href="../alanduong-com.html">alanduong.com</a>
+
+	</div>
+</li>
+<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
+	<div class="dropdown-menu" aria-labelledby="dropdown01">
+		<a class="dropdown-item" href="../mil-moa-calculator.html">MIL/MOA Calculator</a>
+
+	</div>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="../blog.html">Blog</a>
+</li>
+
+			</ul>
+		</div>
+	</div>
+</nav>
+
+
+	<!-- Page Content -->
+	<main role="main" class="container">
+		<div class="blog-post">
+	<h2 class="blog-post-title"><a href="wargame--red-dragon-destruction-points-display.html"><font color=#FFFFFF>Wargame: Red Dragon Destruction Points Display</font></a></h2>
+	<p class="blog-post-meta">Wednesday, April 15, 2020</p>
+
+	<p>In this Real-Time Strategy game there is a gamemode called Conquest where the player captures sectors and accumulates victory points. Whoever reaches the limit first or has the most at the end of the game wins. </p>
+<p>The thing with this gamemode is that it does not show players how many points worth of enemy units they have killed. Maybe that's fair during a game, but it would be interesting to see during a replay.</p>
+<p>This post will be about how I created that <a href=https://github.com/Awcmon/WGRDShowDestructionPoints/tree/master/WGRDShowDestructionPoints>tool</a>, for those who may be interested. Experts in reverse engineering will probably be bored or have a lot of things to nitpick about, so this is more geared towards those who are vaguely familiar with the internal workings of software and want to see how something like this is made. </p>
+<p>The general gist of it is to find the location in memory where the variable that tallies up kills is stored, then make a program that reads the relevant data from that place in memory. This is a fairly simple task, but on a real piece of software, so some may find it interesting.</p>
+<p>We know the data is there-- we just have to find it. Even if the variable is dynamically allocated, pretty much everything can be traced back to a statically allocated piece of data.</p>
+<p>Some vocabulary for those with less familiarity with software:</p>
+<p>pointer: A variable whose value is a memory address of another variable (even another pointer)</p>
+<p>struct: A composite data type where multiple variables are grouped together in a contiguous block of memory. Each variable has a unchanging offset in memory from the base address of the struct.</p>
+<p>address: A specific location in memory. </p>
+<p>memory: Thing that contains data.</p>
+<p>esi, eax, ecx, etc: Different registers. Registers hold data temporarily.</p>
+<p>0x is used to designate a hexadecimal number.</p>
+<p><h3>Cheat Engine</h3></p>
+<p>The first order of business is to find the location in memory of the relevant variables. Personally, I've always avoided using Cheat Engine because it has a reputation for being used by script kiddies. However, it's perfectly suited to finding the location in memory of variables, unsurprisingly. As far as I'm concerned, there's no point to reinventing the wheel when the wheel is perfectly suitable.</p>
+<p><h3>Locating the variable</h3></p>
+<p>So we've got the game running, a replay loaded (thrill-seekers can also do this during a live game for added excitement), and Cheat Engine (henceforth referred to as CE) or whatever running and attached to the game.</p>
+<p>We don't exactly know what type of data the "kills" variable is. However, since it always shows up as a positive integer at the end of the game, it can be assumed that it's an integer. It's also unlikely that the developers would try to save 3 bytes worth of memory, so it's likely that it's a 32-bit integer. Also, this is also a 32-bit game, so the pointers should also be 32-bit.</p>
+<p>It is likely that the kills variable starts at 0, because nobody has gotten a kill yet. However, scanning for 0's takes forever since there is probably a ton of 0's in memory. So we wait until the first kill.</p>
+<img src="https://i.imgur.com/IsricSx.png" class="img-fluid" alt="https://i.imgur.com/IsricSx.png">
+<p>First blood is drawn by the second player (me) when a 5-point APC gets blown up by one of my tanks. Because of this, we'll find player 2's kills first.</p>
+<img src="https://i.imgur.com/FyhcmYA.png" class="img-fluid" alt="https://i.imgur.com/FyhcmYA.png">
+<p>Now we start a scan for a 4 byte value of 5. There's a lot, but a lot less than there are 0's. If it was something like 85, there might be less, but oh well. We'll have to keep scanning.</p>
+<img src="https://i.imgur.com/9HiJzGz.png" class="img-fluid" alt="https://i.imgur.com/9HiJzGz.png">
+<p>An expensive 115-point M1A1 Abrams gets destroyed instantly from infantry anti-tank weapons. Now we should have 120 points, so we scan for that value. CE should now show everything that was 5 last scan, and is now 120 this time around. There should be far less than before, but the number itself tends to vary greatly. Let's try to narrow it down further.</p>
+<img src="https://i.imgur.com/aKIxdxx.png" class="img-fluid" alt="https://i.imgur.com/aKIxdxx.png">
+<p>A Panzerfaust 3 from the Korean Marines finishes off the last M1A1 Abrams. Now we should have 235 points in terms of player 2 kills.</p>
+<img src="https://i.imgur.com/cavkhcR.png" class="img-fluid" alt="https://i.imgur.com/cavkhcR.png">
+<p>Scan for 235 and we now have 2 variables. One is player 2 kills and the other is player 1 deaths. We can find out exactly which one is which if there's a case of friendly fire, but honestly no matter which one is chosen, it'll probably be good enough. Since we found the variable we're interested in, we can stop closely watching for kills.</p>
+<p><h3>Locating the pointer to the variable</h3></p>
+<p>The problem is that the variable is not statically allocated. That is, it may appear anywhere in the space of memory that our game is allocated. So next replay or game, it can and will be at an entirely different memory location. As I said before, all things can be traced back to a static offset from the process' base address so we will have to do just that.</p>
+<img src="https://i.imgur.com/8kjbiCZ.png" class="img-fluid" alt="https://i.imgur.com/8kjbiCZ.png">
+<p>We now want to monitor what instructions write to that address. CE can do this. Attach the debugger and wait until player 2 gets more kills.</p>
+<img src="https://i.imgur.com/jdXMuoU.png" class="img-fluid" alt="https://i.imgur.com/jdXMuoU.png">
+<p>There we go. There's an instruction that adds stuff to the variable located at esi+30, which is our variable. The address of our variable is 0x38F9D210, which is equal to esi + 0x30. In other words, +0x30 is our offset and esi is our base address. Through either basic math or just clicking on the instruction to find what esi was at the moment of time the instruction was executed, we will find that the base address of the struct that contains our kills variable is 0x38F9D1E0.</p>
+<p><h3>Locating the pointer to the pointer to the variable</h3></p>
+<img src="https://i.imgur.com/kTOTPnC.png" class="img-fluid" alt="https://i.imgur.com/kTOTPnC.png">
+<p>Scan for that base address and we will find a single result. Nice. This is the variable that holds the base address to our struct and now we want to find the base address of the struct of this variable.</p>
+<img src="https://i.imgur.com/YuCSK18.png" class="img-fluid" alt="https://i.imgur.com/YuCSK18.png">
+<p>Once again, we monitor that memory location to see what instruction writes to it.</p>
+<img src="https://i.imgur.com/tSLHGfH.png" class="img-fluid" alt="https://i.imgur.com/tSLHGfH.png">
+<p>This one only gets written to after the game ends. We only care about the first instruction because that memory address can be used for pretty much anything after that. The thing is, we actually don't care about the base address of this struct. The game has ended, so now it's meaningless. However, now we know its offset, which is +0x134.</p>
+<p>Let's start another game.</p>
+<img src="https://i.imgur.com/w6x82Of.png" class="img-fluid" alt="https://i.imgur.com/w6x82Of.png">
+<p>Do the same stuff as before to find the new memory address for the kills variable. We chose the variable that had an address ending in 0 last time, so choose the one ending in 0 again. We can speed things up a bit because now we know the offsets. The base address of this struct is the address of the variable minus 0x30, or 0x354EB1B0.</p>
+<img src="https://i.imgur.com/y20XmnN.png" class="img-fluid" alt="https://i.imgur.com/y20XmnN.png">
+<p>Scan for the base address we just found and we will find a single variable that contains that memory address. From the first part of this subsection, we figured out that this variable has an offset of +0x134, so a simple subtraction and we have 0x58147B60.</p>
+<p><h3>Locating the pointer to the pointer to the pointer to the variable</h3></p>
+<img src="https://i.imgur.com/zgkAEYw.png" class="img-fluid" alt="https://i.imgur.com/zgkAEYw.png">
+<p>Scan for that base address we just found. There is a very large amount of entries. We have to narrow it down somehow. </p>
+<p>Open up a new scan tab and a new game.</p>
+<img src="https://i.imgur.com/S4AROB3.png" class="img-fluid" alt="https://i.imgur.com/S4AROB3.png">
+<p>Find the kills variable once again. Again, we use the one ending with a zero because that's what we used in the first place. It has an offset of +0x30, so the base address of its struct is 0x5F184B40 this time.</p>
+<img src="https://i.imgur.com/g2mkoKq.png" class="img-fluid" alt="https://i.imgur.com/g2mkoKq.png">
+<p>Once again, we scan for that base address. As we have found earlier, the variable containing the base address has an offset of +0x134 from its struct, so we subtract it to get the base address of its struct.</p>
+<img src="https://i.imgur.com/jK4q4cY.png" class="img-fluid" alt="https://i.imgur.com/jK4q4cY.png">
+<p>Now we return to the original scan tab with an unreasonably large amount of possible results. We can narrow things down by finding which one of those variables now has our latest base address.</p>
+<img src="https://i.imgur.com/beZnBAx.png" class="img-fluid" alt="https://i.imgur.com/beZnBAx.png">
+<p>The nature of reverse engineering is that while there aren't truly any unknowns, there sure can be a lot of uncertainties. I have done this same exact thing multiple times and sometimes I get one variable, and sometimes I get two. This is one of those times that I get two variables.</p>
+<img src="https://i.imgur.com/NvqkQBf.png" class="img-fluid" alt="https://i.imgur.com/NvqkQBf.png">
+<img src="https://i.imgur.com/gwZO8Px.png" class="img-fluid" alt="https://i.imgur.com/gwZO8Px.png">
+<p>We monitor for instructions writing to either variable.</p>
+<img src="https://i.imgur.com/ItqOpBU.png" class="img-fluid" alt="https://i.imgur.com/ItqOpBU.png">
+<img src="https://i.imgur.com/xxmKKDb.png" class="img-fluid" alt="https://i.imgur.com/xxmKKDb.png">
+<p>Once we leave the replay, we get these. Let's just stick with the first one, and if that doesn't work, we can try the second.</p>
+<img src="https://i.imgur.com/qAYD2z8.png" class="img-fluid" alt="https://i.imgur.com/qAYD2z8.png">
+<p>We have a base address of eax (0x356F9E40) and an offset of ecx*0x4, or 0x14, as this is hexadecimal.</p>
+<p>Also, that list on the bottom is what I meant earlier by "clicking on the instruction" and just copying the value of esi (not shown in the picture unfortunately).</p>
+<p><h3>Locating the pointer to the pointer to the pointer to the pointer to the variable</h3></p>
+<img src="https://i.imgur.com/JdMLOhk.png" class="img-fluid" alt="https://i.imgur.com/JdMLOhk.png">
+<p>We search for the base address we found just now and get this. </p>
+<p>This time the address is green. If you were wondering, "how do we know when to stop?", well then, this is how. If you tried to stop prior to this, you would only experience disappointment or frustration as you find that the addresses of everything you found changed and you must find them again.</p>
+<p>It's finally over. If we copy the address by right-clicking on it, we will actually get <pre><code>wargame3.exe+1D1FE0C</code></pre>. That is the base address of our game and the offset of this pointer relative to that address. Any time the game starts, no matter where it starts, this variable will always be located at the same offset. </p>
+<img src="https://i.imgur.com/7jRMhnd.png" class="img-fluid" alt="https://i.imgur.com/7jRMhnd.png">
+<p>In CE, we can trace our path. It looks like this. This is yet another replay or game, so the addresses have changed, but we are able to end up at the kills variable.</p>
+<img src="https://i.imgur.com/dUH1tFx.png" class="img-fluid" alt="https://i.imgur.com/dUH1tFx.png">
+<p>Another game might look like this.</p>
+<p>Even if we close the game and start it again, because we found everything relative to the process base address, everything will still function.</p>
+<p>The last step is to write a program that reads from process memory. Code for such can be found <a href="https://github.com/Awcmon/WGRDShowDestructionPoints/blob/master/WGRDShowDestructionPoints/Program.cs">here</a>. It is a fairly straightforward program. Access the process memory, go through the memory locations we found, and then read and display our kills variable.</p>
+<p>This goes to show that even a fairly simple task can be pretty fairly when applied to a "real" piece of software. </p>
+
+
+</div><!-- /.blog-post -->
+
+	</main>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
