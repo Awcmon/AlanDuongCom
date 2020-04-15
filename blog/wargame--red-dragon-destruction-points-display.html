@@ -129,7 +129,7 @@
 <hr><img src="https://i.imgur.com/aKIxdxx.png" class="img-fluid" alt="https://i.imgur.com/aKIxdxx.png">
 <p>A Panzerfaust 3 from the Korean Marines finishes off the last M1A1 Abrams. Now we should have 235 points in terms of player 2 kills.</p>
 <hr><img src="https://i.imgur.com/cavkhcR.png" class="img-fluid" alt="https://i.imgur.com/cavkhcR.png">
-<p>Scan for 235 and we now have 2 variables. One is player 2 kills and the other is player 1 deaths. We can find out exactly which one is which if there's a case of friendly fire, but honestly no matter which one is chosen, it'll probably be good enough. Since we found the variable we're interested in, we can stop closely watching for kills.</p>
+<p>Scan for 235 and we now have 2 variables. One is player 2 kills and the other is player 1 deaths. We can find out exactly which one is which if there's a case of friendly fire, but honestly no matter which one is chosen, it'll probably be good enough. Let's just choose the one that ends with a 0. Since we found the variable we're interested in, we can stop closely watching for kills.</p>
 <hr><h3>Locating the pointer to the variable</h3><p>The problem is that the variable is not statically allocated. That is, it may appear anywhere in the block of memory that our game is allocated. So next replay or game, it can and will be at an entirely different memory location. As I said before, all things can be traced back to a static offset from the process' base address so we will have to do just that.</p>
 <img src="https://i.imgur.com/8kjbiCZ.png" class="img-fluid" alt="https://i.imgur.com/8kjbiCZ.png">
 <p>We now want to monitor what instructions write to that address. CE can do this. Attach the debugger and wait until player 2 gets more kills.</p>
