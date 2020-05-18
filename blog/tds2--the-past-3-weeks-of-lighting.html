@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>TDS2: The past 3 weeks of lighting - alanduong.com</title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+
+		input[type="number"]:disabled {
+			background: #CFAFAF;
+		}
+
+		/* Show it is fixed to the top */
+		body {
+			padding-top: 4.5rem;
+		}
+
+		hr {
+			color: #BFBFBF;
+			background-color: #BFBFBF;
+		}
+
+		.blog-post {
+			margin-bottom: 4rem;
+		}
+
+		.blog-post-title {
+			margin-bottom: .25rem;
+			font-size: 2.5rem;
+		}
+
+		.blog-post-meta {
+			margin-bottom: 1.25rem;
+			color: #999;
+		}
+	</style>
+
+	
+
+</head>
+
+<body style="background-color:#262626;color:#DFDFDF">
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="index.html">Alan Duong</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+	<a class="nav-link" href="../index.html">Index</a>
+</li>
+<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</a>
+	<div class="dropdown-menu" aria-labelledby="dropdown01">
+		<a class="dropdown-item" href="../supercruise.html">SUPERCRUISE</a>
+<a class="dropdown-item" href="../twotoner.html">TwoToner</a>
+<a class="dropdown-item" href="../dominocomputer.html">DominoComputer</a>
+<a class="dropdown-item" href="../springy-sanic.html">Springy Sanic</a>
+<a class="dropdown-item" href="../alanduong-com.html">alanduong.com</a>
+
+	</div>
+</li>
+<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
+	<div class="dropdown-menu" aria-labelledby="dropdown01">
+		<a class="dropdown-item" href="../mil-moa-calculator.html">MIL/MOA Calculator</a>
+
+	</div>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="../blog.html">Blog</a>
+</li>
+
+			</ul>
+		</div>
+	</div>
+</nav>
+
+
+	<!-- Page Content -->
+	<main role="main" class="container">
+		<div class="blog-post">
+	<h2 class="blog-post-title"><a href="tds2--the-past-3-weeks-of-lighting.html"><font color=#FFFFFF>TDS2: The past 3 weeks of lighting</font></a></h2>
+	<p class="blog-post-meta">Monday, May 18, 2020</p>
+
+	<p>There hasn't been a blog post in a while because on top of my game development, I have been busy working 57 hours a week across two dead-end jobs to try to keep my finances afloat while I continue on my search for a software development job.</p>
+<p>I have been working on a top-down shooter. I don't want to talk too much about the plans and would rather have the current work speak for itself, because things are always subject to change as the game becomes more fleshed out.</p>
+<p>Currently, it doesn't even have a name. It's simply called TDS2 for Top Down Shooter 2. Yes, there was a TDS1.</p>
+<p>I figure I would describe the development of the project so far in general terms, not going too heavily into the details.</p>
+<h3>By April 20th</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/w5cFP-Mbkiw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>This is my game prior to trying to implement lighting. The basic elements of a TDS, not that there are really that many, are there, fog of war included. For my particular game, lighting would play an critical role in both the planned stealth aspects of the game along with the general atmosphere. For that reason, it would be unwise to not get something so fundamental to my game out of the way first. </p>
+<p>I had dabbled with 2D lighting in the past in the failed experiment described <a href=https://www.alanduong.com/blog/naive-lighting-gradients.html>here</a>. </p>
+<h3>By May 1st</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/1SV4qbXtgGI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>I was going to write a detailed writeup about how exactly I did this, but a short explanation will suffice for now. I generate a "visibility mesh" for each light, representing the area that can be lit by a given light. This mesh is then colored with a gradient that goes from white to the color of the darkness depending on the distance from the light origin. All of these gradients are rendered to a render texture, which is then multiplicatively blended in with everything else to darken parts that are not lit.</p>
+<p>The darkness color can be any arbitrary color, so this supports day, night, dusk, dawn, etc.</p>
+<p>Most solutions I've seen online only care about just the visibility part (mainly for calculating line of sight stuff for stealth games), or just the lighting part (interaction with walls is not considered). I needed both so this does both.</p>
+<h3>By May 6th</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/P9QA2-2-6Cg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>I implemented simple weapon lights and more lighting features such as flickering and crackling (like, from a fire. Not really shown in the video sadly). Lights interact with each other far less offensively than they had in my naive lighting gradients post, but it still looked not great. </p>
+<h3>By May 16th</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/EyzrPrQot3s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>I made the lights blend in together much more nicely, and honestly just look much nicer in general. All I really had to do was apply gaussian blur to the lighting texture before it was multiplied to the rest of the scene. This video also showcases how movable light-blocking objects such as doors interact with the light. Fog of War was temporarily disabled because honestly, the lighting color would sometimes appear through the fog of war. The video quality on this was also pretty atrocious, regrettably.</p>
+<h3>By May 17th</h3><iframe width="560" height="315" src="https://www.youtube.com/embed/JGDwoDHbMvk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>I got the lighting to play nice with the fog of war, at the cost of colored lights becoming more "clear". This is not really a pro or a con and is more of a stylistic thing, but I did believe the foggier lights fit more with the atmosphere I was trying to produce. That can be decided later, however. </p>
+<p>With the lighting system more or less completed, I decided to put it into use. Lights can be combined with each other to create composite lights. This is used for the player's weapon light, to both make it far more realistic and honestly far more usable. Muzzle flashes also illuminate the surrounding area, but just like real life, this only really shows in areas without much lighting. </p>
+<p>Aside from lighting, the screen shake was tuned a bit to have an angular component too, but the screen shake will probably be completely redone.</p>
+<h3>What next?</h3><p>This isn't to say that I am completely finished with the lighting system, but as of now I'm fairly happy with where it is currently at and would rather work on other parts of the game. </p>
+
+
+</div><!-- /.blog-post -->
+
+	</main>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
