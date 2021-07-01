@@ -13,6 +13,7 @@ namespace AlanDuongCom
 		{
 			Site site = new Site("alanduong.com", "defaultTemplate.html");
 			site.CreatePage("Index", "index.html", "");
+			site.CreatePage("SUPERCRUISE2", "supercruise2.html", "Projects");
 			site.CreatePage("SUPERCRUISE", "supercruise.html", "Projects");
 			site.CreatePage("TwoToner", "twotoner.html", "Projects");
 			site.CreatePage("DominoComputer", "dominocomputer.html", "Projects");
