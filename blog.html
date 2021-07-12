@@ -118,7 +118,62 @@
 				Personal blog mainly about computer-related things.
 			</h3>
 
-			
+			<div class="blog-post">
+	<h2 class="blog-post-title"><a href="blog/tds2--the--i-actually-wanted-to-make-a-first-person-shooter--camera-mode.html"><font color=#FFFFFF>TDS2: The "I actually wanted to make a first-person shooter" Camera Mode</font></a></h2>
+	<p class="blog-post-meta">Tuesday, May 19, 2020</p>
+
+	<p>When the camera is centered on the player, more than half of the entire screen is completely wasted space, because I do not intend for the player to be able to see behind themselves. This is a deliberate design choice to make the game feel more claustrophobic, tense, and uncertain.</p>
+<p>I devised a new system to make better use of screen space and honestly it's easier to show than describe. Here's a video.</p>
+<div class="embed-responsive embed-responsive-16by9"><iframe width="560" height="315" src="https://www.youtube.com/embed/DyYOIkwfyPU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p>This was a pretty quick implementation to get a feel for it. Personally, I like it, and might make this the default camera mode. I do not feel like wasting over half the screen space is very acceptable. This also frees up the mouse's y-axis, but I do not have any ideas for it currently.</p>
+
+
+</div><!-- /.blog-post -->
+<div class="blog-post">
+	<h2 class="blog-post-title"><a href="blog/tds2--the-past-3-weeks-of-lighting.html"><font color=#FFFFFF>TDS2: The past 3 weeks of lighting</font></a></h2>
+	<p class="blog-post-meta">Monday, May 18, 2020</p>
+
+	<p>There hasn't been a blog post in a while because on top of my game development, I have been busy working 57 hours a week across two dead-end jobs to try to keep my finances afloat while I continue on my search for a software development job.</p>
+<p>I have been working on a top-down shooter. I don't want to talk too much about the plans and would rather have the current work speak for itself, because things are always subject to change as the game becomes more fleshed out.</p>
+<p>Currently, it doesn't even have a name. It's simply called TDS2 for Top Down Shooter 2. Yes, there was a TDS1.</p>
+<p>I figure I would describe the development of the project so far in general terms, not going too heavily into the details.</p>
+<h3>By April 20th</h3><a href="blog/tds2--the-past-3-weeks-of-lighting.html"><font color=#FFFFFF>Continue reading</font></a>
+
+</div><!-- /.blog-post -->
+<div class="blog-post">
+	<h2 class="blog-post-title"><a href="blog/unity-universal-rendering-pipeline-2d-lighting-tools-as-of-april-25--2020.html"><font color=#FFFFFF>Unity Universal Rendering Pipeline 2D Lighting Tools as of April 25, 2020</font></a></h2>
+	<p class="blog-post-meta">Sunday, April 26, 2020</p>
+
+	<p>Unity's new rendering pipeline comes with some neat new 2D lighting tools, so I gave it a spin.</p>
+<img src="https://i.imgur.com/1uDgF5C.png" class="img-fluid" alt="https://i.imgur.com/1uDgF5C.png">
+<p>Great!</p>
+<p>What if we move the light around?</p>
+<img src="https://i.imgur.com/a3uF7jv.png" class="img-fluid" alt="https://i.imgur.com/a3uF7jv.png">
+<a href="blog/unity-universal-rendering-pipeline-2d-lighting-tools-as-of-april-25--2020.html"><font color=#FFFFFF>Continue reading</font></a>
+
+</div><!-- /.blog-post -->
+<div class="blog-post">
+	<h2 class="blog-post-title"><a href="blog/naive-lighting-gradients.html"><font color=#FFFFFF>Naive Lighting Gradients</font></a></h2>
+	<p class="blog-post-meta">Tuesday, April 21, 2020</p>
+
+	<p>A while ago, I was working on a game and wanted to implement efficient 2d environmental lighting (think day and night cycles rather than shading sprites differently depending on the lighting). This method does not work very well, but this might be a useful write up because it failed.</p>
+<h3>The extremely naive approach to lighting that doesn't work</h3><p>In Garry's Mod, people used to make "night vision" by placing a green overlay over the screen. This is not very effective because it doesn't actually illuminate the area. All it did was give things a green tint and would not actually help you see better in the dark.</p>
+<h3>The naive approach</h3><p>We can achieve simple illumination by cutting a hole in the darkness.</p>
+<a href="blog/naive-lighting-gradients.html"><font color=#FFFFFF>Continue reading</font></a>
+
+</div><!-- /.blog-post -->
+<div class="blog-post">
+	<h2 class="blog-post-title"><a href="blog/wargame--red-dragon-destruction-points-display.html"><font color=#FFFFFF>Wargame: Red Dragon Destruction Points Display</font></a></h2>
+	<p class="blog-post-meta">Wednesday, April 15, 2020</p>
+
+	<p>In this Real-Time Strategy game there is a gamemode called Conquest where the player captures sectors and accumulates victory points. Whoever reaches the limit first or has the most at the end of the game wins. </p>
+<p>The thing with this gamemode is that it does not show players how many points worth of enemy units they have killed. Maybe that's fair during a game, but it would be interesting to see during a replay.</p>
+<p>This post will be about how I created <a href=https://github.com/Awcmon/WGRDShowDestructionPoints/tree/master/WGRDShowDestructionPoints>this tool</a>, for those who may be interested. Experts in reverse engineering will probably be bored or have a lot of things to nitpick about, so this is more geared towards those who are vaguely familiar with the internal workings of software and want to see how something like this is made. Or something.</p>
+<p>The general gist of it is to find the location in memory where the variable that tallies up kills is stored, then make a program that reads the relevant data from that place in memory. This is a fairly simple task, but on a real piece of software, so some may find it interesting.</p>
+<p>We know the data is there-- we just have to find it. Even if the variable is dynamically allocated, pretty much everything can be traced back to a statically allocated piece of data. Eventually.</p>
+<a href="blog/wargame--red-dragon-destruction-points-display.html"><font color=#FFFFFF>Continue reading</font></a>
+
+</div><!-- /.blog-post -->
+
 
 		</div><!-- /.blog-main -->
 
